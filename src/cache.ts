@@ -1,7 +1,4 @@
-import {
-  InMemoryCache,
-  defaultDataIdFromObject,
-} from "apollo-cache-inmemory";
+import { InMemoryCache, defaultDataIdFromObject } from "@apollo/client";
 import { persistCache as apolloPersistCache } from "apollo3-cache-persist";
 import { LOCAL_STORAGE_EXISTS } from "./consts";
 

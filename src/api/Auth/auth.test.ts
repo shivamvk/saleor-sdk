@@ -1,4 +1,4 @@
-import { InMemoryCache } from "apollo-cache-inmemory";
+import { InMemoryCache } from "@apollo/client";
 import { setupRecording, setupAPI } from "../../../testUtils/api";
 import { AuthAPI } from ".";
 import { defaultConfig } from "../../config";
