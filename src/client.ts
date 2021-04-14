@@ -1,4 +1,4 @@
-import { ApolloCache } from "apollo-cache";
+import { ApolloCache } from "@apollo/client/cache";
 import { ApolloClient, ApolloLink } from "@apollo/client";
 
 import { ApolloConfigOptions } from "./types";
