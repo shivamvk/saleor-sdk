@@ -1,10 +1,8 @@
 import {
   InMemoryCache,
   defaultDataIdFromObject,
-  NormalizedCacheObject,
 } from "apollo-cache-inmemory";
-import { persistCache as apolloPersistCache } from "apollo-cache-persist";
-import { PersistentStorage, PersistedData } from "apollo-cache-persist/types";
+import { persistCache as apolloPersistCache } from "apollo3-cache-persist";
 import { LOCAL_STORAGE_EXISTS } from "./consts";
 
 interface SaleorCacheConfig {
@@ -34,9 +32,7 @@ export const createSaleorCache = async ({
   if (persistCache && LOCAL_STORAGE_EXISTS) {
     await apolloPersistCache({
       cache: saleorCache,
-      storage: window.localStorage as PersistentStorage<
-        PersistedData<NormalizedCacheObject>
-      >,
+      storage: window.localStorage,
     });
   }
 
