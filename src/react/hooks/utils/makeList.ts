@@ -1,6 +1,5 @@
-import { useApolloClient } from "react-apollo";
+import { useApolloClient, ApolloClient } from "@apollo/client";
 import { useEffect, useRef, useState } from "react";
-import ApolloClient from "apollo-client";
 import BaseList, { BaseListVariables } from "../../../helpers/BaseList";
 
 export function makeList<TObject, TQuery, TVariables extends BaseListVariables>(
