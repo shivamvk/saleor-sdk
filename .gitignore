@@ -14,3 +14,7 @@
 !.storybook
 lib
 node_modules
+
+# JS GraphQL IntelliJ Plugin
+remote-schema.graphql
+.graphqlconfig
