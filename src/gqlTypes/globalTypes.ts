@@ -86,6 +86,7 @@ export enum CollectionSortField {
   AVAILABILITY = "AVAILABILITY",
   NAME = "NAME",
   PRODUCT_COUNT = "PRODUCT_COUNT",
+  PUBLICATION_DATE = "PUBLICATION_DATE",
 }
 
 /**
@@ -407,6 +408,7 @@ export enum ProductOrderField {
   MINIMAL_PRICE = "MINIMAL_PRICE",
   NAME = "NAME",
   PRICE = "PRICE",
+  PUBLICATION_DATE = "PUBLICATION_DATE",
   PUBLISHED = "PUBLISHED",
   TYPE = "TYPE",
 }
@@ -497,6 +499,7 @@ export interface ProductFilterInput {
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface ProductOrder {
