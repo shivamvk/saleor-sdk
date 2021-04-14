@@ -1,4 +1,4 @@
-import ApolloClient, { ApolloQueryResult } from "apollo-client";
+import { ApolloClient, ApolloQueryResult } from "@apollo/client";
 import { GetBaseDetails, MapQueryData } from "./types";
 
 abstract class BaseDetails<TQuery, TObject, TVariables> {

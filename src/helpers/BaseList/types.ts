@@ -1,4 +1,4 @@
-import { ApolloQueryResult } from "apollo-client";
+import { ApolloQueryResult } from "@apollo/client";
 import { PageInfo } from "../../fragments/gqlTypes/PageInfo";
 
 export type GetBaseList<TQuery, TVariables> = (

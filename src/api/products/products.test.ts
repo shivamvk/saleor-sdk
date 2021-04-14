@@ -1,4 +1,4 @@
-import ApolloClient from "apollo-client";
+import { ApolloClient } from "@apollo/client";
 import { ProductsAPI } from "./products";
 import { OrderDirection, ProductOrderField } from "../../gqlTypes/globalTypes";
 import { setupAPI, setupRecording } from "../../../testUtils/api";

@@ -1,4 +1,4 @@
-import ApolloClient from "apollo-client";
+import { ApolloClient } from "@apollo/client";
 
 import { Checkout } from "../../fragments/gqlTypes/Checkout";
 import { Payment } from "../../fragments/gqlTypes/Payment";

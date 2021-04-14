@@ -1,4 +1,4 @@
-import ApolloClient from "apollo-client";
+import { ApolloClient } from "@apollo/client";
 import { CategoryAncestorsListVariables } from "../../queries/gqlTypes/CategoryAncestorsList";
 import { CategoryChildrenListVariables } from "../../queries/gqlTypes/CategoryChildrenList";
 import {

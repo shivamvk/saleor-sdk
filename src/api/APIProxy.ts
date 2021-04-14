@@ -3,7 +3,7 @@ import {
   ApolloError,
   ObservableQuery,
   WatchQueryOptions,
-} from "apollo-client";
+} from "@apollo/client";
 import { GraphQLError } from "graphql";
 
 import { UserOrderByToken } from "../queries/gqlTypes/UserOrderByToken";

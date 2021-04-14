@@ -1,4 +1,4 @@
-import { ApolloClient } from "apollo-client";
+import { ApolloClient } from "@apollo/client";
 
 import { SaleorAPI } from "./api";
 import { ConfigInput, ApolloConfigInput } from "./types";

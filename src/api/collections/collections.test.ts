@@ -1,4 +1,4 @@
-import ApolloClient from "apollo-client";
+import { ApolloClient } from "@apollo/client";
 import { setupRecording, setupAPI } from "../../../testUtils/api";
 import { CollectionsAPI } from "./collections";
 import {

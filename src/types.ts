@@ -1,7 +1,8 @@
-import ApolloClient, {
+import {
+  ApolloClient,
   ApolloClientOptions,
   ObservableQuery,
-} from "apollo-client";
+} from "@apollo/client";
 import { ApolloLink } from "apollo-link";
 import { ApolloCache } from "apollo-cache";
 

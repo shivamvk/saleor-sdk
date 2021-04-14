@@ -1,4 +1,4 @@
-import ApolloClient, { ApolloQueryResult } from "apollo-client";
+import { ApolloClient, ApolloQueryResult } from "@apollo/client";
 import { PageInfo } from "../../fragments/gqlTypes/PageInfo";
 import {
   GetBaseList,

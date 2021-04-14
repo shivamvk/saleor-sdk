@@ -1,4 +1,4 @@
-import { ApolloError } from "apollo-client";
+import { ApolloError } from "@apollo/client";
 
 import { PasswordChange } from "../mutations/gqlTypes/PasswordChange";
 import { SetPassword } from "../mutations/gqlTypes/SetPassword";
