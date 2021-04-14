@@ -1,4 +1,4 @@
-import { isEqual } from "apollo-utilities";
+import equal from "@wry/equality";
 import React from "react";
 
 import APIProxy from "../api/APIProxy";
@@ -45,7 +45,7 @@ const useQuery = <
   });
 
   const setData = React.useCallback((data: TData, loading?: boolean) => {
-    if (!isEqual(data, prevDataRef.current)) {
+    if (!equal(data, prevDataRef.current)) {
       prevDataRef.current = data;
       setResult({ data, error: null, loading: false });
     } else {
