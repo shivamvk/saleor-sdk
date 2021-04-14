@@ -1,5 +1,5 @@
-import { BatchHttpLink } from "apollo-link-batch-http";
-import { RetryLink } from "apollo-link-retry";
+import { BatchHttpLink } from "@apollo/client/link/batch-http";
+import { RetryLink } from "@apollo/client/link/retry";
 
 import { authLink, invalidTokenLinkWithTokenHandler } from "./auth";
 

@@ -1,6 +1,6 @@
-import { ApolloLink } from "apollo-link";
-import { setContext } from "apollo-link-context";
-import { ErrorResponse, onError } from "apollo-link-error";
+import { ApolloLink } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import { ErrorResponse, onError } from "@apollo/client/link/error";
 import { GraphQLError } from "graphql";
 
 import { findValueInEnum } from "./utils";

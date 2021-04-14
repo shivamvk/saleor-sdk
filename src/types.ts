@@ -1,9 +1,9 @@
 import {
   ApolloClient,
   ApolloClientOptions,
+  ApolloLink,
   ObservableQuery,
 } from "@apollo/client";
-import { ApolloLink } from "apollo-link";
 import { ApolloCache } from "apollo-cache";
 
 export type QueryShape = (...args: any) => any;
