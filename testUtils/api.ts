@@ -1,11 +1,11 @@
-import { BatchHttpLink } from "apollo-link-batch-http";
+import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import { setupPolly } from "setup-polly-jest";
 import { Polly } from "@pollyjs/core";
 import fetch from "node-fetch";
 import NodeHttpAdapter from "@pollyjs/adapter-node-http";
 import FSPersister from "@pollyjs/persister-fs";
 import path from "path";
-import { RetryLink } from "apollo-link-retry";
+import { RetryLink } from "@apollo/client/link/retry";
 import {
   createSaleorCache,
   createSaleorClient,

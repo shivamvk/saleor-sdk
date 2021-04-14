@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ApolloClient from "apollo-client";
-import { ApolloProvider } from "react-apollo";
+import { ApolloClient, ApolloProvider } from "@apollo/client";
 
 import { SaleorManager } from "../../..";
 import { SaleorAPI } from "../../../api";

@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import React from "react";
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from "@apollo/client";
 import { setupRecording, setupAPI } from "../../../testUtils/api";
 import { useCollectionDetails, useCollectionList } from "./collections";
 import {
