@@ -96,6 +96,12 @@
       "git add"
     ]
   },
+  "peerDependencies": {
+    "@apollo/client": "^3.3.15",
+    "graphql": "^14.5.8",
+    "react": "^16.9.9",
+    "react-dom": "^16.9.0"
+  },
   "type": "commonjs",
   "typings": "./lib/index.d.ts"
 }
