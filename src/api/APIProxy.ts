@@ -308,7 +308,9 @@ class APIProxy {
         refetch: (newVariables?: TVariables) => {
           if (newVariables) {
             observable.setVariables(newVariables);
-            const cachedResult = observable.currentResult();
+            const cachedResult = observable.getCurrentResult();
+            // TODO: Change handleDataErrors signature to make it compatible with Apollo 3
+            // @ts-ignore
             const errorHandledData = handleDataErrors(mapFn, cachedResult.data);
             if (errorHandledData.data) {
               onUpdate(errorHandledData.data as TResult);
