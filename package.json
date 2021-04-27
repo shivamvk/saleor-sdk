@@ -34,6 +34,7 @@
   "author": "Mirumee",
   "dependencies": {
     "@apollo/client": "^3.3.15",
+    "@react-native-async-storage/async-storage": "^1.15.4",
     "@wry/equality": "^0.1.11",
     "apollo3-cache-persist": "^0.9.1",
     "lodash": "^4.17.15",
@@ -102,7 +103,8 @@
     "graphql": "^14.5.8",
     "react": "^16.9.9",
     "react-dom": "^16.9.0",
-    "react-native": "^0.63.4"
+    "react-native": "^0.63.4",
+    "@react-native-async-storage/async-storage": "^1.15.4"
   },
   "type": "commonjs",
   "typings": "./lib/index.d.ts"
