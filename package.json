@@ -41,8 +41,7 @@
     "apollo3-cache-persist": "^0.9.1",
     "dayjs": "^1.10.4",
     "lodash": "^4.17.15",
-    "lodash-es": "^4.17.15",
-    "react-native": "^0.63.4"
+    "lodash-es": "^4.17.15"
   },
   "devDependencies": {
     "@pollyjs/adapter-node-http": "^4.3.0",
