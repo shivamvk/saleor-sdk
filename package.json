@@ -74,6 +74,7 @@
     "graphql": "^14.5.8",
     "husky": "^4.2.5",
     "jest": "^26.0.1",
+    "jest-expo": "^41.0.0",
     "jscodeshift": "^0.9.0",
     "lint-staged": "^10.2.4",
     "move-file-cli": "^1.0.0",
