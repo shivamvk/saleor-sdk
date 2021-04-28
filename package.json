@@ -4,6 +4,7 @@
   "description": "This package contains all queries and mutations that are used in our sample storefront. It can be used for semi-custom or fully-custom (with ability to extend existing queries) storefront solutions.",
   "homepage": "https://getsaleor.com/",
   "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=12.16.3"
