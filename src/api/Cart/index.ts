@@ -96,7 +96,7 @@ export class SaleorCartAPI extends ErrorListener {
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
-        this.localStorageManager.getHandler().setCheckout({
+        await this.localStorageManager.getHandler().setCheckout({
           ...this.saleorState.checkout,
           lines: data,
         });
@@ -128,7 +128,7 @@ export class SaleorCartAPI extends ErrorListener {
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
-        this.localStorageManager.getHandler().setCheckout({
+        await this.localStorageManager.getHandler().setCheckout({
           ...this.saleorState.checkout,
           lines: data,
         });
@@ -161,7 +161,7 @@ export class SaleorCartAPI extends ErrorListener {
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
-        this.localStorageManager.getHandler().setCheckout({
+        await this.localStorageManager.getHandler().setCheckout({
           ...this.saleorState.checkout,
           lines: data,
         });
@@ -194,7 +194,7 @@ export class SaleorCartAPI extends ErrorListener {
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
-        this.localStorageManager.getHandler().setCheckout({
+        await this.localStorageManager.getHandler().setCheckout({
           ...this.saleorState.checkout,
           lines: data,
         });

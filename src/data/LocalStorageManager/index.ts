@@ -2,7 +2,7 @@ import { SaleorState } from "../../state";
 import { LocalStorageHandler } from "../../helpers/LocalStorageHandler/LocalStorageHandler";
 
 export class LocalStorageManager {
-  private handler: LocalStorageHandler;
+  private readonly handler: LocalStorageHandler;
 
   private saleorState: SaleorState;
 
@@ -15,7 +15,7 @@ export class LocalStorageManager {
     return this.handler;
   };
 
-  addItemToCart = (variantId: string, quantity: number) => {
+  addItemToCart = async (variantId: string, quantity: number) => {
     const lines = this.saleorState.checkout?.lines || [];
     let variantInCheckout = lines.find(
       variant => variant.variant.id === variantId
@@ -46,12 +46,12 @@ export class LocalStorageManager {
       : {
           lines: alteredLines,
         };
-    this.handler.setCheckout(alteredCheckout);
+    await this.handler.setCheckout(alteredCheckout);
 
     return alteredCheckout;
   };
 
-  removeItemFromCart = (variantId: string) => {
+  removeItemFromCart = async (variantId: string) => {
     const lines = this.saleorState.checkout?.lines || [];
     const variantInCheckout = lines.find(
       variant => variant.variant.id === variantId
@@ -71,12 +71,12 @@ export class LocalStorageManager {
       : {
           lines: alteredLines,
         };
-    this.handler.setCheckout(alteredCheckout);
+    await this.handler.setCheckout(alteredCheckout);
 
     return alteredCheckout;
   };
 
-  subtractItemFromCart = (variantId: string) => {
+  subtractItemFromCart = async (variantId: string) => {
     const lines = this.saleorState.checkout?.lines || [];
     const variantFromCart = lines.find(
       variant => variant.variant.id === variantId
@@ -99,12 +99,12 @@ export class LocalStorageManager {
       : {
           lines: alteredLines,
         };
-    this.handler.setCheckout(alteredCheckout);
+    await this.handler.setCheckout(alteredCheckout);
 
     return alteredCheckout;
   };
 
-  updateItemInCart = (variantId: string, quantity: number) => {
+  updateItemInCart = async (variantId: string, quantity: number) => {
     const lines = this.saleorState.checkout?.lines || [];
     const variantInCheckout = lines.find(
       variant => variant.variant.id === variantId
@@ -124,7 +124,7 @@ export class LocalStorageManager {
       : {
           lines: alteredLines,
         };
-    this.handler.setCheckout(alteredCheckout);
+    await this.handler.setCheckout(alteredCheckout);
 
     return alteredCheckout;
   };

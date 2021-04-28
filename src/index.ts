@@ -25,9 +25,9 @@ interface ConnectResult {
 }
 
 export class SaleorManager {
-  private config: ConfigInput;
+  private readonly config: ConfigInput;
 
-  private apolloConfig: ApolloConfigInput;
+  private readonly apolloConfig: ApolloConfigInput;
 
   private apiProxy?: APIProxy;
 
@@ -48,7 +48,7 @@ export class SaleorManager {
   }
 
   /**
-   * Use this method to obtain current API and optionally listen to its update on occured changes within it.
+   * Use this method to obtain current API and optionally listen to its update on occurred changes within it.
    * @param apiChangeListener Function called to get an API and called on every API update.
    */
   async connect(
@@ -99,7 +99,7 @@ export class SaleorManager {
       client || createSaleorClient(saleorCache, saleorLinks, options);
 
     const apiProxy = new APIProxy(apolloClient);
-    const api = new SaleorAPI(
+    const api = await SaleorAPI.create(
       apolloClient,
       apiProxy,
       config,

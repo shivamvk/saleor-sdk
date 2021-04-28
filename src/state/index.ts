@@ -65,8 +65,7 @@ export class SaleorState extends NamedObservable<StateItems> {
 
   private localStorageHandler: LocalStorageHandler;
 
-  constructor(
-    config: Config,
+  private constructor(
     localStorageHandler: LocalStorageHandler,
     apolloClientManager: ApolloClientManager,
     jobsManager: JobsManager
@@ -77,10 +76,25 @@ export class SaleorState extends NamedObservable<StateItems> {
     this.jobsManager = jobsManager;
 
     this.loaded = defaultSaleorStateLoaded;
-    this.onSignInTokenUpdate(LocalStorageHandler.getSignInToken());
+  }
 
-    this.subscribeStateToChanges();
-    this.initializeState(config);
+  static async create(
+    config: Config,
+    localStorageHandler: LocalStorageHandler,
+    apolloClientManager: ApolloClientManager,
+    jobsManager: JobsManager
+  ): Promise<SaleorState> {
+    const saleorState = new SaleorState(
+      localStorageHandler,
+      apolloClientManager,
+      jobsManager
+    );
+    const signInToken = await LocalStorageHandler.getSignInToken();
+    saleorState.onSignInTokenUpdate(signInToken);
+    saleorState.subscribeStateToChanges();
+    await saleorState.initializeState(config);
+
+    return saleorState;
   }
 
   /**
@@ -119,7 +133,8 @@ export class SaleorState extends NamedObservable<StateItems> {
     /**
      * Before making any fetch, first try to verify token if it exists.
      */
-    if (LocalStorageHandler.getSignInToken()) {
+    const signInToken = await LocalStorageHandler.getSignInToken();
+    if (signInToken) {
       this.onSignInTokenVerifyingUpdate(true);
       await this.verityToken();
     }
@@ -135,7 +150,8 @@ export class SaleorState extends NamedObservable<StateItems> {
       await this.jobsManager.run("checkout", "provideCheckout", {
         isUserSignedIn: !!this.user,
       });
-      this.onPaymentUpdate(LocalStorageHandler.getPayment());
+      const getPayment = await LocalStorageHandler.getPayment();
+      this.onPaymentUpdate(getPayment);
     }
   };
 

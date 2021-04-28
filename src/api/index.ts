@@ -37,13 +37,30 @@ export class SaleorAPI {
    */
   legacyAPIProxy: APIProxy;
 
-  constructor(
+  private constructor(
+    auth: AuthAPI,
+    checkout: SaleorCheckoutAPI,
+    cart: SaleorCartAPI,
+    categories: CategoriesAPI,
+    collections: CollectionsAPI,
+    products: ProductsAPI,
+    legacyAPIProxy: APIProxy
+  ) {
+    this.auth = auth;
+    this.checkout = checkout;
+    this.cart = cart;
+    this.categories = categories;
+    this.collections = collections;
+    this.products = products;
+    this.legacyAPIProxy = legacyAPIProxy;
+  }
+
+  static async create(
     client: ApolloClient<any>,
     apiProxy: APIProxy,
     config: ConfigInput,
     onStateUpdate?: () => any
-  ) {
-    this.legacyAPIProxy = apiProxy;
+  ): Promise<SaleorAPI> {
     const finalConfig = {
       ...defaultConfig,
       ...config,
@@ -55,11 +72,11 @@ export class SaleorAPI {
 
     const localStorageHandler = new LocalStorageHandler();
     const apolloClientManager = new ApolloClientManager(client);
-    const jobsManager = new JobsManager(
+    const jobsManager = await JobsManager.create(
       localStorageHandler,
       apolloClientManager
     );
-    const saleorState = new SaleorState(
+    const saleorState = await SaleorState.create(
       finalConfig,
       localStorageHandler,
       apolloClientManager,
@@ -74,24 +91,22 @@ export class SaleorAPI {
       saleorState.subscribeToNotifiedChanges(onStateUpdate);
     }
 
-    this.auth = new AuthAPI(saleorState, jobsManager, finalConfig);
-    this.checkout = new SaleorCheckoutAPI(saleorState, jobsManager);
-    this.cart = new SaleorCartAPI(
-      localStorageManager,
-      apolloClientManager,
-      saleorState,
-      jobsManager
-    );
-    this.categories = new CategoriesAPI(client);
-    this.collections = new CollectionsAPI(client);
-    this.products = new ProductsAPI(client);
+    const authApi = await AuthAPI.create(saleorState, jobsManager, finalConfig);
 
-    this.legacyAPIProxy.attachAuthListener(authenticated => {
-      if (!authenticated) {
-        localStorageHandler.setCheckout({});
-        localStorageHandler.setPayment({});
-        localStorageHandler.setJobs(null);
-      }
-    });
+    return new SaleorAPI(
+      // Create properties with async results
+      authApi,
+      new SaleorCheckoutAPI(saleorState, jobsManager),
+      new SaleorCartAPI(
+        localStorageManager,
+        apolloClientManager,
+        saleorState,
+        jobsManager
+      ),
+      new CategoriesAPI(client),
+      new CollectionsAPI(client),
+      new ProductsAPI(client),
+      apiProxy
+    );
   }
 }

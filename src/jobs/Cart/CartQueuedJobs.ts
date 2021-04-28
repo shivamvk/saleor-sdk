@@ -22,7 +22,7 @@ export class CartQueuedJobs extends QueuedJobsHandler<ErrorCartTypes> {
   }
 
   setCartItem = async () => {
-    const checkout = LocalStorageHandler.getCheckout();
+    const checkout = await LocalStorageHandler.getCheckout();
 
     if (checkout) {
       const { data, error } = await this.apolloClientManager.setCartItem(
@@ -31,7 +31,7 @@ export class CartQueuedJobs extends QueuedJobsHandler<ErrorCartTypes> {
       if (error && this.onErrorListener) {
         this.onErrorListener(error, ErrorCartTypes.SET_CART_ITEM);
       } else if (data) {
-        this.localStorageHandler.setCheckout({
+        await this.localStorageHandler.setCheckout({
           ...checkout,
           availablePaymentGateways: data.availablePaymentGateways,
           availableShippingMethods: data.availableShippingMethods,

@@ -122,8 +122,8 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
       };
     }
 
-    this.localStorageHandler.setSignInToken(data?.token || null);
-    this.localStorageHandler.setCsrfToken(data?.csrfToken || null);
+    await this.localStorageHandler.setSignInToken(data?.token || null);
+    await this.localStorageHandler.setCsrfToken(data?.csrfToken || null);
 
     return {
       data,
@@ -131,7 +131,7 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
   };
 
   signOut = async (): PromiseAuthJobRunResponse => {
-    this.localStorageHandler.clear();
+    await this.localStorageHandler.clear();
 
     await this.apolloClientManager.signOut();
 
@@ -139,7 +139,7 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
   };
 
   verifySignInToken = async () => {
-    const token = LocalStorageHandler.getSignInToken();
+    const token = await LocalStorageHandler.getSignInToken();
 
     if (!token) {
       return {
@@ -177,7 +177,7 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
   }): PromiseAuthJobRunResponse => {
     this.notifyEvent(AuthJobsEvents.SIGN_IN_TOKEN_REFRESHING, true);
 
-    const csrfToken = LocalStorageHandler.getCsrfToken();
+    const csrfToken = await LocalStorageHandler.getCsrfToken();
 
     if (!csrfToken && !refreshToken) {
       return {
@@ -206,7 +206,7 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
       };
     }
 
-    this.localStorageHandler.setSignInToken(data?.token || null);
+    await this.localStorageHandler.setSignInToken(data?.token || null);
 
     this.notifyEvent(AuthJobsEvents.SIGN_IN_TOKEN_REFRESHING, false);
 

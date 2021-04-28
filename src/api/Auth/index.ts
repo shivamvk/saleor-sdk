@@ -93,10 +93,20 @@ export class AuthAPI extends ErrorListener {
         }
       }
     );
+  }
 
-    if (!this.saleorState.signInToken && CREDENTIAL_API_EXISTS) {
-      this.autoSignIn();
+  static async create(
+    saleorState: SaleorState,
+    jobsManager: JobsManager,
+    config: Config
+  ): Promise<AuthAPI> {
+    const authApi = new AuthAPI(saleorState, jobsManager, config);
+
+    if (!authApi.saleorState.signInToken) {
+      await authApi.autoSignIn();
     }
+
+    return authApi;
   }
 
   /**

@@ -40,7 +40,7 @@ class CheckoutJobs extends JobsHandler<{}> {
   provideCheckout = async ({
     isUserSignedIn,
   }: ProvideCheckoutJobInput): PromiseCheckoutJobRunResponse => {
-    const checkout = LocalStorageHandler.getCheckout();
+    const checkout = await LocalStorageHandler.getCheckout();
 
     const { data, error } = await this.apolloClientManager.getCheckout(
       isUserSignedIn,
@@ -55,7 +55,7 @@ class CheckoutJobs extends JobsHandler<{}> {
         },
       };
     }
-    this.localStorageHandler.setCheckout(data || checkout);
+    await this.localStorageHandler.setCheckout(data || checkout);
 
     return {
       data,
@@ -90,7 +90,7 @@ class CheckoutJobs extends JobsHandler<{}> {
       };
     }
 
-    this.localStorageHandler.setCheckout({
+    await this.localStorageHandler.setCheckout({
       ...data,
       selectedBillingAddressId,
       selectedShippingAddressId,
@@ -123,7 +123,7 @@ class CheckoutJobs extends JobsHandler<{}> {
       };
     }
 
-    this.localStorageHandler.setCheckout({
+    await this.localStorageHandler.setCheckout({
       ...checkout,
       availableShippingMethods: data?.availableShippingMethods,
       billingAsShipping: false,
@@ -156,7 +156,7 @@ class CheckoutJobs extends JobsHandler<{}> {
       };
     }
 
-    this.localStorageHandler.setCheckout({
+    await this.localStorageHandler.setCheckout({
       ...checkout,
       availablePaymentGateways: data?.availablePaymentGateways,
       billingAddress: data?.billingAddress,
@@ -192,7 +192,7 @@ class CheckoutJobs extends JobsHandler<{}> {
       };
     }
 
-    this.localStorageHandler.setCheckout({
+    await this.localStorageHandler.setCheckout({
       ...checkout,
       availablePaymentGateways: data?.availablePaymentGateways,
       billingAddress: data?.billingAddress,
@@ -223,7 +223,7 @@ class CheckoutJobs extends JobsHandler<{}> {
       };
     }
 
-    this.localStorageHandler.setCheckout({
+    await this.localStorageHandler.setCheckout({
       ...checkout,
       promoCodeDiscount: data?.promoCodeDiscount,
       shippingMethod: data?.shippingMethod,
@@ -251,7 +251,7 @@ class CheckoutJobs extends JobsHandler<{}> {
       };
     }
 
-    this.localStorageHandler.setCheckout({
+    await this.localStorageHandler.setCheckout({
       ...checkout,
       promoCodeDiscount: data?.promoCodeDiscount,
     });
@@ -278,7 +278,7 @@ class CheckoutJobs extends JobsHandler<{}> {
       };
     }
 
-    this.localStorageHandler.setCheckout({
+    await this.localStorageHandler.setCheckout({
       ...checkout,
       promoCodeDiscount: data?.promoCodeDiscount,
     });
@@ -314,7 +314,7 @@ class CheckoutJobs extends JobsHandler<{}> {
       };
     }
 
-    this.localStorageHandler.setPayment({
+    await this.localStorageHandler.setPayment({
       ...payment,
       creditCard,
       gateway: data?.gateway,
@@ -348,8 +348,8 @@ class CheckoutJobs extends JobsHandler<{}> {
     }
 
     if (!data?.confirmationNeeded) {
-      this.localStorageHandler.setCheckout({});
-      this.localStorageHandler.setPayment({});
+      await this.localStorageHandler.setCheckout({});
+      await this.localStorageHandler.setPayment({});
     }
 
     return { data };
