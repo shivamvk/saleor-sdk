@@ -1,6 +1,9 @@
 import { InMemoryCache, defaultDataIdFromObject } from "@apollo/client";
-import { persistCache as apolloPersistCache } from "apollo3-cache-persist";
-import { LOCAL_STORAGE_EXISTS } from "./consts";
+import {
+  AsyncStorageWrapper,
+  persistCache as apolloPersistCache,
+} from "apollo3-cache-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface SaleorCacheConfig {
   /**
@@ -26,10 +29,10 @@ export const createSaleorCache = async ({
     },
   });
 
-  if (persistCache && LOCAL_STORAGE_EXISTS) {
+  if (persistCache) {
     await apolloPersistCache({
       cache: saleorCache,
-      storage: window.localStorage,
+      storage: new AsyncStorageWrapper(AsyncStorage),
     });
   }
 
