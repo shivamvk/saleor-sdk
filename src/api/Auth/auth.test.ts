@@ -14,8 +14,11 @@ describe("Auth API", () => {
   let authAPI: AuthAPI;
   let cache: InMemoryCache;
   let apiProxy: APIProxy;
+  let localStorageHandler: LocalStorageHandler;
+  let apolloClientManager: ApolloClientManager;
+  let jobsManager: JobsManager;
 
-  beforeAll(async done => {
+  beforeAll(async () => {
     const { client, cache: apiCache, apiUrl } = await setupAPI();
     cache = apiCache;
 
@@ -23,13 +26,13 @@ describe("Auth API", () => {
       ...defaultConfig,
       apiUrl,
     };
-    const localStorageHandler = new LocalStorageHandler();
-    const apolloClientManager = new ApolloClientManager(client);
-    const jobsManager = new JobsManager(
+    localStorageHandler = new LocalStorageHandler();
+    apolloClientManager = new ApolloClientManager(client);
+    jobsManager = await JobsManager.create(
       localStorageHandler,
       apolloClientManager
     );
-    const saleorState = new SaleorState(
+    const saleorState = await SaleorState.create(
       config,
       localStorageHandler,
       apolloClientManager,
@@ -39,8 +42,6 @@ describe("Auth API", () => {
     authAPI = new AuthAPI(saleorState, jobsManager, config);
 
     apiProxy = new APIProxy(client);
-
-    done();
   });
 
   it("Returns error if credentials are invalid", async () => {
