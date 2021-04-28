@@ -36,6 +36,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.15",
     "@react-native-async-storage/async-storage": "^1.15.4",
+    "@react-native-community/netinfo": "^6.0.0",
     "@wry/equality": "^0.1.11",
     "apollo3-cache-persist": "^0.9.1",
     "lodash": "^4.17.15",
