@@ -1,8 +1,12 @@
+// TODO: implement SecureStorage to store tokens
+import { GraphQLError } from "graphql";
+
 import { ApolloLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { ErrorResponse, onError } from "@apollo/client/link/error";
-import { GraphQLError } from "graphql";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { LocalStorageItems } from "./helpers";
 import { findValueInEnum } from "./utils";
 
 export enum JWTError {
@@ -13,27 +17,30 @@ export enum JWTError {
 
 export function isJwtError(error: GraphQLError): boolean {
   let jwtError: boolean;
+
   try {
     jwtError = !!findValueInEnum(error.extensions?.exception.code, JWTError);
-  } catch (e) {
+  } catch {
     jwtError = false;
   }
 
   return jwtError;
 }
 
-export function getAuthToken(): string | null {
+export async function getAuthToken(): Promise<string | null> {
   try {
-    return localStorage.getItem("token");
-  } catch {
+    return await AsyncStorage.getItem(LocalStorageItems.TOKEN);
+  } catch (error) {
     return null;
   }
 }
 
-export function setAuthToken(token: string) {
-  localStorage.setItem("token", token);
-  const authEvent = new Event("auth");
-  dispatchEvent(authEvent);
+export async function setAuthToken(token: string): Promise<boolean | void> {
+  try {
+    return await AsyncStorage.setItem(LocalStorageItems.TOKEN, token);
+  } catch (error) {
+    return false;
+  }
 }
 
 interface ResponseError extends ErrorResponse {
@@ -44,10 +51,10 @@ interface ResponseError extends ErrorResponse {
 }
 
 // possibly remove callback here and use event emitter
-export const invalidTokenLinkWithTokenHandler = (
+export function invalidTokenLinkWithTokenHandler(
   tokenExpirationCallback: () => void
-): ApolloLink => {
-  const link = onError((error: ResponseError) => {
+): ApolloLink {
+  return onError((error: ResponseError) => {
     const isTokenExpired = error.graphQLErrors?.some(isJwtError);
     if (
       isTokenExpired ||
@@ -56,19 +63,21 @@ export const invalidTokenLinkWithTokenHandler = (
       tokenExpirationCallback();
     }
   });
-  return link;
-};
+}
 
-export const authLink = setContext((_, context) => {
-  const authToken = getAuthToken();
+export const authLink = setContext(async (_, context) => {
+  // get the authentication token from Asyncstorage if it exists
+  const authToken = await getAuthToken();
   if (authToken) {
     return {
       ...context,
+      // return the headers to the context so httpLink can read them
       headers: {
         ...context.headers,
-        Authorization: authToken ? `JWT ${authToken}` : null,
+        authorization: authToken ? `JWT ${authToken}` : null,
       },
     };
   }
+
   return context;
 });

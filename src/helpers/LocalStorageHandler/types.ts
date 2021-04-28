@@ -140,3 +140,8 @@ type IQueuedJobsState<T> = {
 };
 
 export type IJobsModel = IQueuedJobsState<IQueuedJobs>;
+
+export type StorageItem = {
+  item: string | null;
+  timestamp: number;
+};

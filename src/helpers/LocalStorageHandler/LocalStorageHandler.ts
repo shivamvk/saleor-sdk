@@ -7,49 +7,101 @@ import {
 import LocalStorageHandlerProxy from "./Proxy";
 
 export class LocalStorageHandler extends LocalStorageHandlerProxy {
-  static getCheckout(): ICheckoutModel | null {
-    return LocalStorageHandlerProxy.retrieveObject(LocalStorageItems.CHECKOUT);
+  static async getCheckout(): Promise<ICheckoutModel | null> {
+    try {
+      return await LocalStorageHandlerProxy.retrieveItem(
+        LocalStorageItems.CHECKOUT
+      );
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  static getPayment(): IPaymentModel | null {
-    return LocalStorageHandlerProxy.retrieveObject(LocalStorageItems.PAYMENT);
+  static async getPayment(): Promise<IPaymentModel | null> {
+    try {
+      return await LocalStorageHandlerProxy.retrieveItem(
+        LocalStorageItems.PAYMENT
+      );
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  static getJobs(): IJobsModel | null {
-    return LocalStorageHandlerProxy.retrieveObject(
-      LocalStorageItems.JOB_QUEUE_CHECKOUT
-    );
+  static async getJobs(): Promise<IJobsModel | null> {
+    try {
+      return await LocalStorageHandlerProxy.retrieveItem(
+        LocalStorageItems.JOB_QUEUE_CHECKOUT
+      );
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  static getSignInToken(): string | null {
-    return LocalStorageHandlerProxy.retrieveItem(LocalStorageItems.TOKEN);
+  static async getSignInToken(): Promise<string | null> {
+    try {
+      return await LocalStorageHandlerProxy.retrieveItem(
+        LocalStorageItems.TOKEN
+      );
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  static getCsrfToken(): string | null {
-    return LocalStorageHandlerProxy.retrieveItem(LocalStorageItems.CSRF_TOKEN);
+  static async getCsrfToken(): Promise<string | null> {
+    try {
+      return await LocalStorageHandlerProxy.retrieveItem(
+        LocalStorageItems.CSRF_TOKEN
+      );
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  setSignInToken(token: string | null): void {
-    this.saveItem(LocalStorageItems.TOKEN, token);
+  async setSignInToken(token: string | null): Promise<void> {
+    try {
+      return await this.saveItem(LocalStorageItems.TOKEN, token);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  setCsrfToken(csrfToken: string | null): void {
-    this.saveItem(LocalStorageItems.CSRF_TOKEN, csrfToken);
+  async setCsrfToken(csrfToken: string | null): Promise<void> {
+    try {
+      return await this.saveItem(LocalStorageItems.CSRF_TOKEN, csrfToken);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  setCheckout(checkout: ICheckoutModel | null): void {
-    this.saveObject(LocalStorageItems.CHECKOUT, checkout);
+  async setCheckout(checkout: ICheckoutModel | null): Promise<void> {
+    try {
+      return await this.saveItem(LocalStorageItems.CHECKOUT, checkout);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  setPayment(payment: IPaymentModel | null): void {
-    this.saveObject(LocalStorageItems.PAYMENT, payment);
+  async setPayment(payment: IPaymentModel | null): Promise<void> {
+    try {
+      return await this.saveItem(LocalStorageItems.PAYMENT, payment);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  setJobs(jobs: IJobsModel | null): void {
-    return this.saveObject(LocalStorageItems.JOB_QUEUE_CHECKOUT, jobs);
+  async setJobs(jobs: IJobsModel | null): Promise<void> {
+    try {
+      return await this.saveItem(LocalStorageItems.JOB_QUEUE_CHECKOUT, jobs);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  clear(): void {
-    this.clearStorage();
+  async clear(): Promise<void> {
+    try {
+      return await this.clearStorage();
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 }
