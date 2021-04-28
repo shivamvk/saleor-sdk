@@ -39,7 +39,7 @@ describe("Auth API", () => {
       jobsManager
     );
 
-    authAPI = new AuthAPI(saleorState, jobsManager, config);
+    authAPI = await AuthAPI.create(saleorState, jobsManager, config);
 
     apiProxy = new APIProxy(client);
   });

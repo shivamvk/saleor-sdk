@@ -49,7 +49,7 @@ export class AuthAPI extends ErrorListener {
 
   private config: Config;
 
-  constructor(
+  private constructor(
     saleorState: SaleorState,
     jobsManager: JobsManager,
     config: Config
