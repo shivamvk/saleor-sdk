@@ -1,8 +1,8 @@
 {
-  "name": "@saleor/native-sdk",
+  "name": "@cristian05/saleor-native-sdk",
   "version": "0.1.5",
-  "description": "This package contains all queries and mutations that are used in our sample storefront. It can be used for semi-custom or fully-custom (with ability to extend existing queries) storefront solutions.",
-  "homepage": "https://getsaleor.com/",
+  "description": "This package contains all queries and mutations that are used in saleor storefront adapted to react native. It can be used for semi-custom or fully-custom (with ability to extend existing queries) react native storefront solutions.",
+  "homepage": "https://github.com/cristian05/saleor-sdk",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "license": "BSD-3-Clause",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mirumee/saleor-sdk.git"
+    "url": "https://github.com/cristian05/saleor-sdk"
   },
   "scripts": {
     "build": "tsc",
@@ -32,7 +32,13 @@
     "apollo",
     "graphql"
   ],
-  "author": "Mirumee",
+  "authors": [
+    "Mirumee <hello@mirumee.com>",
+    "Cristian Flórez"
+  ],
+  "bugs": {
+    "url": "https://github.com/cristian05/saleor-sdk/issues"
+  },
   "dependencies": {
     "@apollo/client": "^3.3.15",
     "@react-native-async-storage/async-storage": "^1.15.4",
