@@ -21,9 +21,7 @@ module.exports = {
     "!**/jest.setup.js",
   ],
   moduleFileExtensions: ["js", "ts", "tsx"],
-  transformIgnorePatterns: [
-    "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)",
-  ],
+  transformIgnorePatterns: ["node_modules/(?!(@react-native|react-native)/)"],
   setupFiles: ['<rootDir>/jest.setup.js'],
   coverageReporters: ["json-summary", "text", "lcov"],
 };

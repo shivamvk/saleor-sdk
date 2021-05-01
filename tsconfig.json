@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "declaration": true,
     "esModuleInterop": true,
-    "jsx": "react-native",
+    "jsx": "react",
     "lib": ["es2017", "dom", "esnext"],
     "module": "commonjs",
     "noUnusedLocals": true,

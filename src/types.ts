@@ -18,19 +18,17 @@ export type WatchMapFn<T extends QueryShape, TResult> = (
 
 export type InferOptions<T> = T extends (_: any, o: infer O) => any ? O : never;
 
-export type QueryData<T extends (...args: any) => any> = ReturnType<
-  T
-> extends Promise<infer R>
+export type QueryData<
+  T extends (...args: any) => any,
+> = ReturnType<T> extends Promise<infer R>
   ? R extends { [key: string]: any }
     ? R["data"]
     : null
   : never;
 
-export type WatchQueryData<T extends (...args: any) => any> = ReturnType<
-  T
-> extends ObservableQuery<infer R>
-  ? R
-  : never;
+export type WatchQueryData<
+  T extends (...args: any) => any,
+> = ReturnType<T> extends ObservableQuery<infer R> ? R : never;
 
 export type ApolloConfigOptions = Omit<
   ApolloClientOptions<any>,
