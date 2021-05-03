@@ -47,11 +47,7 @@ export class JobsManager {
     const netInfo = await NetInfo.fetch();
     // Check if internet is available to run all jobs in queue
     if (netInfo.type !== "unknown" && netInfo.isInternetReachable === true) {
-      try {
-        await jobsManager.onOnline();
-      } catch (networkError) {
-        throw new Error(networkError.message);
-      }
+      await jobsManager.onOnline();
     }
 
     return jobsManager;
