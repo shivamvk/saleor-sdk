@@ -56,8 +56,10 @@ const useQuery = <
   const {
     unsubscribe,
     setOptions,
+    /* eslint-disable @typescript-eslint/naming-convention */
     refetch: _refetch,
     loadMore: _loadMore,
+    /* eslint-enable @typescript-eslint/naming-convention */
   } = React.useMemo(
     () =>
       (saleor.legacyAPIProxy[query] as AdditionalAPI)(variables, {

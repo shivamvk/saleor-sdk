@@ -6,6 +6,7 @@ export interface JobErrorResponse<T> {
   type?: T;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- F = undefined its necessary?
 export interface JobRunResponse<D, F = undefined> {
   data?: any;
   dataError?: JobErrorResponse<D>;

@@ -95,4 +95,5 @@ export const QUERIES = {
     }),
 };
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare -- intentionally naming the type the same as the variable
 export type QUERIES = typeof QUERIES;
