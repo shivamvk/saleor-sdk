@@ -30,11 +30,13 @@
     "shop",
     "typescript",
     "apollo",
-    "graphql"
+    "graphql",
+    "react native",
+    "react-native"
   ],
   "authors": [
     "Mirumee <hello@mirumee.com>",
-    "Cristian Flórez"
+    "Cristian Flórez <cristianflorez0501@gmail.com>"
   ],
   "bugs": {
     "url": "https://github.com/crisfcodes/saleor-sdk/issues"
