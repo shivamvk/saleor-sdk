@@ -41,8 +41,9 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.16",
-    "@react-native-async-storage/async-storage": "^1.15.4",
-    "@react-native-community/netinfo": "^6.0.0",
+    "@react-native-async-storage/async-storage": "1.15.4",
+    "@react-native-community/netinfo": "6.0.0",
+    "@wry/equality": "^0.4.0",
     "apollo3-cache-persist": "^0.9.1",
     "dayjs": "^1.10.4",
     "graphql": "^15.5.0",
@@ -94,6 +95,10 @@
     "typescript": "^3.9.2"
   },
   "peerDependencies": {
+    "@apollo/client": "^3.3.16",
+    "@react-native-async-storage/async-storage": "1.15.4",
+    "@react-native-community/netinfo": "6.0.0",
+    "graphql": "^15.5.0",
     "react": "17.0.1",
     "react-native": "0.64.0"
   },
