@@ -32,7 +32,7 @@ export class CartQueuedJobs extends QueuedJobsHandler<ErrorCartTypes> {
         this.onErrorListener(error, ErrorCartTypes.SET_CART_ITEM);
       } else if (data) {
         await this.localStorageHandler.setCheckout({
-          ...checkout,
+          ...(checkout?._W? checkout?._W : checkout),
           availablePaymentGateways: data.availablePaymentGateways,
           availableShippingMethods: data.availableShippingMethods,
           lines: data.lines,
