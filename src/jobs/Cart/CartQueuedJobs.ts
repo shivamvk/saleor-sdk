@@ -26,7 +26,7 @@ export class CartQueuedJobs extends QueuedJobsHandler<ErrorCartTypes> {
 
     if (checkout) {
       const { data, error } = await this.apolloClientManager.setCartItem(
-        checkout
+        checkout?._W? checkout?._W : checkout
       );
       if (error && this.onErrorListener) {
         this.onErrorListener(error, ErrorCartTypes.SET_CART_ITEM);
