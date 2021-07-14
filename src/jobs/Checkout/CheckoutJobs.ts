@@ -224,7 +224,7 @@ class CheckoutJobs extends JobsHandler<{}> {
     }
 
     await this.localStorageHandler.setCheckout({
-      ...checkout,
+      ...data,
       promoCodeDiscount: data?.promoCodeDiscount,
       shippingMethod: data?.shippingMethod,
     });

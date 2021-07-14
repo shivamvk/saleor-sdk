@@ -29,7 +29,11 @@ class LocalStorageHandlerProxy extends NamedObservable<
         timestamp: Date.now(),
       };
       if(name === LocalStorageItems.CHECKOUT){
-        await AsyncStorage.setItem(name, JSON.stringify(item || {}));
+        if(item?._W){
+          await AsyncStorage.setItem(name, JSON.stringify(item._W || {}));
+        } else{
+          await AsyncStorage.setItem(name, JSON.stringify(item || {}));
+        }
       } else {
         await AsyncStorage.setItem(name, JSON.stringify(wrappedItem));
       }
