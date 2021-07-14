@@ -210,4 +210,11 @@ export class SaleorCartAPI extends ErrorListener {
       pending: false,
     };
   };
+
+  //method to update cart with latest checkout
+  updateCart = async () => {
+    if(this.saleorState.checkout?.id){
+      this.jobsManager.addToQueue("cart", "setCartItem");
+    }
+  }
 }
