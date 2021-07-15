@@ -40,7 +40,7 @@ export class LocalStorageManager {
     }
     const alteredCheckout = this.saleorState.checkout
       ? {
-          ...this.saleorState.checkout,
+          ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W : this.saleorState.checkout),
           lines: alteredLines,
         }
       : {
