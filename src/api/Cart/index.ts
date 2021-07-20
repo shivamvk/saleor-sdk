@@ -150,7 +150,7 @@ export class SaleorCartAPI extends ErrorListener {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
         await this.localStorageManager.getHandler().setCheckout({
-          ...this.saleorState.checkout,
+          ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
           lines: data,
         });
       }
@@ -180,7 +180,7 @@ export class SaleorCartAPI extends ErrorListener {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
         await this.localStorageManager.getHandler().setCheckout({
-          ...this.saleorState.checkout,
+          ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
           lines: data,
         });
       }
