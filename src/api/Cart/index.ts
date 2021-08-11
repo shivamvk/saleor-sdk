@@ -96,9 +96,11 @@ export class SaleorCartAPI extends ErrorListener {
   setCartItem = async () => {
     console.log('setcart line 108', this.saleorState.checkout);
     if (this.saleorState.checkout?._W?.id || this.saleorState.checkout?.id) {
-      this.jobsManager.addToQueue("cart", "setCartItem");
+      const { data, error } = await this.jobsManager.addToQueue("cart", "setCartItem");
       return {
-        pending: true,
+        pending: false,
+        data,
+        error
       };
     }
     return {

@@ -30,6 +30,7 @@ export class CartQueuedJobs extends QueuedJobsHandler<ErrorCartTypes> {
       );
       if (error && this.onErrorListener) {
         this.onErrorListener(error, ErrorCartTypes.SET_CART_ITEM);
+        return { error };
       } else if (data) {
         await this.localStorageHandler.setCheckout({
           ...(checkout?._W? checkout?._W : checkout),
@@ -39,6 +40,7 @@ export class CartQueuedJobs extends QueuedJobsHandler<ErrorCartTypes> {
           promoCodeDiscount: data.promoCodeDiscount,
           shippingMethod: data.shippingMethod,
         });
+        return { data };
       }
     }
   };
