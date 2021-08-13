@@ -225,6 +225,50 @@ export class AuthAPI extends ErrorListener {
     };
   };
 
+  signInMobile = async (
+    checkoutId: any,
+    otp: string,
+    phone: string
+    // autoSignIn: boolean
+  ): PromiseRunResponse<DataErrorAuthTypes> => {
+    const { data, dataError } = await this.jobsManager.run(
+      "auth",
+      "signInMobile",
+      {
+        checkoutId,
+        otp,
+        phone,
+      }
+    );
+
+    if (dataError) {
+      return {
+        data,
+        dataError,
+        pending: false,
+      };
+    }
+
+    const {
+      data: userData,
+      dataError: userDataError,
+    } = await this.jobsManager.run("auth", "provideUser", undefined);
+    if (this.config.loadOnStart.checkout) {
+      await this.jobsManager.run("checkout", "provideCheckout", {
+        isUserSignedIn: !!data?.user,
+      });
+    }
+    // if (this.config.loadOnStart.wishlist) {
+    //   await this.jobsManager.run("wishlist", "getWishlist", undefined);
+    // }
+
+    return {
+      data: userData,
+      dataError: userDataError,
+      pending: false,
+    };
+  };
+
   /**
    * Sign out user by clearing cache, local storage and authentication token.
    */

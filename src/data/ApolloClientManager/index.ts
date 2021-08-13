@@ -89,6 +89,7 @@ import {
   VerifySignInTokenInput,
   RefreshSignInTokenInput,
 } from "./types";
+import { OTPAuthentication, OTPAuthenticationVariables } from "src/mutations/gqlTypes/OTPAuthentication";
 
 export class ApolloClientManager {
   private client: ApolloClient<any>;
@@ -215,6 +216,39 @@ export class ApolloClientManager {
         csrfToken: data?.tokenCreate?.csrfToken,
         token: data?.tokenCreate?.token,
         user: data?.tokenCreate?.user,
+      },
+    };
+  };
+
+  signInMobile = async (checkoutId: any, otp: string, phone: string) => {
+    const { data, errors } = await this.client.mutate<
+      OTPAuthentication,
+      OTPAuthenticationVariables
+    >({
+      fetchPolicy: "no-cache",
+      mutation: AuthMutations.createOTPTokeMutation,
+      variables: {
+        checkoutId,
+        otp,
+        phone,
+      },
+    });
+
+    if (errors?.length) {
+      return {
+        error: errors,
+      };
+    }
+    if (data?.CreateTokenOTP?.otpErrors.length) {
+      return {
+        error: data.CreateTokenOTP.otpErrors,
+      };
+    }
+    return {
+      data: {
+        csrfToken: data?.CreateTokenOTP?.csrfToken,
+        token: data?.CreateTokenOTP?.token,
+        user: data?.CreateTokenOTP?.user,
       },
     };
   };
