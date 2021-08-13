@@ -49,3 +49,32 @@ export const tokenRefreshMutation = gql`
     }
   }
 `;
+
+export const createOTPTokeMutation = gql`
+  mutation OTPAuthentication($phone: String!, $otp: String!, $checkoutId: ID) {
+    CreateTokenOTP: otpTokenCreate(
+      otp: $otp
+      phone: $phone
+      checkoutId: $checkoutId
+    ) {
+      token
+      refreshToken
+      csrfToken
+      user {
+        id
+        email
+        firstName
+        lastName
+        metadata {
+          key
+          value
+        }
+      }
+      otpErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+`;

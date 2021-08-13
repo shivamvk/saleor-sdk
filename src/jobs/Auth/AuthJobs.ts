@@ -130,6 +130,38 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
     };
   };
 
+  signInMobile = async ({
+    checkoutId,
+    otp,
+    phone,
+  }: {
+    checkoutId: any;
+    otp: string;
+    phone: string;
+  }): PromiseAuthJobRunResponse => {
+    const { data, error } = await this.apolloClientManager.signInMobile(
+      checkoutId,
+      otp,
+      phone
+    );
+
+    if (error) {
+      return {
+        dataError: {
+          error,
+          type: DataErrorAuthTypes.SIGN_IN,
+        },
+      };
+    }
+
+    this.localStorageHandler.setSignInToken(data?.token || null);
+    this.localStorageHandler.setCsrfToken(data?.csrfToken || null);
+
+    return {
+      data,
+    };
+  };
+
   signOut = async (): PromiseAuthJobRunResponse => {
     await this.localStorageHandler.clear();
 

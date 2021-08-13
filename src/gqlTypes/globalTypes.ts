@@ -374,6 +374,14 @@ export enum OrderStatus {
 /**
  * An enumeration.
  */
+ export enum OTPErrorCodeEnum {
+  INVALID_OTP = "INVALID_OTP",
+  INVALID_PHONE = "INVALID_PHONE",
+}
+
+/**
+ * An enumeration.
+ */
 export enum PaymentChargeStatusEnum {
   CANCELLED = "CANCELLED",
   FULLY_CHARGED = "FULLY_CHARGED",
