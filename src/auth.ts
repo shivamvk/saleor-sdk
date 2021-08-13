@@ -74,7 +74,7 @@ export const authLink = setContext(async (_, context) => {
       // return the headers to the context so httpLink can read them
       headers: {
         ...context.headers,
-        authorization: authToken ? `JWT ${authToken}` : null,
+        authorization: authToken ? `JWT ${JSON.parse(authToken!).item}` : null,
       },
     };
   }
