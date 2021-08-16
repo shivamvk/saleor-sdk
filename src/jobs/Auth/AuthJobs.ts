@@ -5,6 +5,7 @@ import { DataErrorAuthTypes } from "../../api/Auth/types";
 
 import { JobRunResponse } from "../types";
 import { JobsHandler } from "../JobsHandler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export enum AuthJobsEvents {
   SIGN_IN_TOKEN_REFRESHING,
@@ -171,9 +172,8 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
   };
 
   verifySignInToken = async () => {
-    const token = await LocalStorageHandler.getSignInToken();
-
-    if (!token) {
+    const wrappedToken = await AsyncStorage.getItem("token");
+    if (!wrappedToken) {
       return {
         dataError: {
           error: new Error(
@@ -183,6 +183,7 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
         },
       };
     }
+    const token = JSON.parse(wrappedToken).item;
 
     const { data, error } = await this.apolloClientManager.verifySignInToken({
       token,

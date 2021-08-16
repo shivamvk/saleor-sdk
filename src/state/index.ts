@@ -16,6 +16,7 @@ import { Config } from "../types";
 import { ISaleorStateSummeryPrices, StateItems } from "./types";
 import { AuthJobsEvents } from "../jobs/Auth";
 import { BROWSER_NO_CREDENTIAL_API_MESSAGE } from "../api/Auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface SaleorStateLoaded {
   user: boolean;
@@ -118,13 +119,16 @@ export class SaleorState extends NamedObservable<StateItems> {
       LocalStorageEvents.CLEAR,
       this.onClearLocalStorage
     );
-    this.apolloClientManager.subscribeToUserChange(this.onUserUpdate);
     this.jobsManager.attachEventListener("auth", (event, value) => {
       if (event === AuthJobsEvents.SIGN_IN_TOKEN_REFRESHING) {
         this.onSignInTokenRefreshUpdate(value);
       }
     });
   };
+
+  loadUser = () => {
+    this.apolloClientManager.subscribeToUserChange(this.onUserUpdate);
+  }
 
   /**
    * Initialize class members with cached or fetched data.
@@ -133,7 +137,7 @@ export class SaleorState extends NamedObservable<StateItems> {
     /**
      * Before making any fetch, first try to verify token if it exists.
      */
-    const signInToken = await LocalStorageHandler.getSignInToken();
+     const signInToken = await AsyncStorage.getItem("token");
     if (signInToken) {
       this.onSignInTokenVerifyingUpdate(true);
       await this.verityToken();

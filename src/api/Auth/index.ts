@@ -92,6 +92,7 @@ export class AuthAPI extends ErrorListener {
         }
       }
     );
+    this.saleorState.loadUser();
   }
 
   static async create(
@@ -307,5 +308,5 @@ export class AuthAPI extends ErrorListener {
     };
   };
 
-  private autoSignIn = async () => {};
+  private autoSignIn = async () => { };
 }
