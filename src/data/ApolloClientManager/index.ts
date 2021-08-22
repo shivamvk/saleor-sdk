@@ -90,11 +90,11 @@ import {
   VerifySignInTokenInput,
   RefreshSignInTokenInput,
 } from "./types";
-import { OTPAuthentication, OTPAuthenticationVariables } from "src/mutations/gqlTypes/OTPAuthentication";
-import { Wishlist, WishlistVariables } from "src/queries/gqlTypes/Wishlist";
-import { getWishlist } from "src/queries/wishlist";
-import { wishlistAddProduct, wishlistAddProductVariables } from "src/mutations/gqlTypes/wishlistAddProduct";
-import { wishlistRemoveProduct, wishlistRemoveProductVariables } from "src/mutations/gqlTypes/wishlistRemoveProduct";
+import { OTPAuthentication, OTPAuthenticationVariables } from "../../mutations/gqlTypes/OTPAuthentication";
+import { Wishlist, WishlistVariables } from "../../queries/gqlTypes/Wishlist";
+import { getWishlist } from "../../queries/wishlist";
+import { wishlistAddProduct, wishlistAddProductVariables } from "../../mutations/gqlTypes/wishlistAddProduct";
+import { wishlistRemoveProduct, wishlistRemoveProductVariables } from "../../mutations/gqlTypes/wishlistRemoveProduct";
 
 export class ApolloClientManager {
   private client: ApolloClient<any>;
