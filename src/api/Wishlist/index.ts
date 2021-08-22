@@ -50,6 +50,8 @@ export class SaleorWishlistAPI extends ErrorListener {
         this.loaded = loaded.checkout && loaded.summaryPrices;
       }
     );
+
+    this.saleorState.loadWishlist();
   }
   
   getWishlist = async () => {
