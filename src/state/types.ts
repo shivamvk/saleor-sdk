@@ -13,6 +13,7 @@ export enum StateItems {
   SUMMARY_PRICES,
   PROMO_CODE,
   PAYMENT,
+  WISHLIST
 }
 
 export interface ISaleorStateSummeryPrices {

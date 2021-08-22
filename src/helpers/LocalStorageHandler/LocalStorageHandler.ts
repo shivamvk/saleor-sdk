@@ -2,6 +2,7 @@ import {
   ICheckoutModel,
   IJobsModel,
   IPaymentModel,
+  IWishlistModel,
   LocalStorageItems,
 } from "./types";
 import LocalStorageHandlerProxy from "./Proxy";
@@ -92,6 +93,14 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
   async setJobs(jobs: IJobsModel | null): Promise<void> {
     try {
       return await this.saveItem(LocalStorageItems.JOB_QUEUE_CHECKOUT, jobs);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async setWishlist(wishlist: IWishlistModel | null) {
+    try{
+      return await this.saveItem(LocalStorageItems.WISHLIST, wishlist);
     } catch (error) {
       throw new Error(error.message);
     }

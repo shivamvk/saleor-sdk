@@ -1,5 +1,6 @@
 import { SaleorState } from "../../state";
 import { LocalStorageHandler } from "../../helpers/LocalStorageHandler/LocalStorageHandler";
+import { Wishlist_wishlist_items_edges_node_product } from "src/queries/gqlTypes/Wishlist";
 
 export class LocalStorageManager {
   private readonly handler: LocalStorageHandler;
@@ -127,5 +128,14 @@ export class LocalStorageManager {
     await this.handler.setCheckout(alteredCheckout);
 
     return alteredCheckout;
+  };
+
+  addItemInWishlist = (
+    productList: Wishlist_wishlist_items_edges_node_product[] | null | undefined
+  ) => {
+    // const items = this.saleorState.wishlist?.items;
+    // items?.push(product);
+    const wishlist = { items: productList };
+    this.handler.setWishlist(wishlist);
   };
 }

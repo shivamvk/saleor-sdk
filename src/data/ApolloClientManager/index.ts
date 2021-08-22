@@ -13,6 +13,7 @@ import {
 import * as AuthMutations from "../../mutations/auth";
 import * as UserMutations from "../../mutations/user";
 import * as CheckoutMutations from "../../mutations/checkout";
+import * as WishlistMutations from "../../mutations/wishlist";
 import {
   AddCheckoutPromoCode,
   AddCheckoutPromoCodeVariables,
@@ -90,6 +91,10 @@ import {
   RefreshSignInTokenInput,
 } from "./types";
 import { OTPAuthentication, OTPAuthenticationVariables } from "src/mutations/gqlTypes/OTPAuthentication";
+import { Wishlist, WishlistVariables } from "src/queries/gqlTypes/Wishlist";
+import { getWishlist } from "src/queries/wishlist";
+import { wishlistAddProduct, wishlistAddProductVariables } from "src/mutations/gqlTypes/wishlistAddProduct";
+import { wishlistRemoveProduct, wishlistRemoveProductVariables } from "src/mutations/gqlTypes/wishlistRemoveProduct";
 
 export class ApolloClientManager {
   private client: ApolloClient<any>;
@@ -109,6 +114,69 @@ export class ApolloClientManager {
         query: UserQueries.getUserDetailsQuery,
       })
       .subscribe(value => next(value.data?.me), error, complete);
+  };
+
+  getWishlistItems = async (first: number) => {
+    const { data, errors } = await this.client.query<
+      Wishlist,
+      WishlistVariables
+    >({
+      query: getWishlist,
+      variables: {
+        first,
+      },
+    });
+
+    if (errors?.length) {
+      return {
+        error: errors,
+      };
+    }
+    return {
+      data: data.wishlist,
+    };
+  };
+
+  addWishlistItems = async (productId: string) => {
+    const { data, errors } = await this.client.mutate<
+      wishlistAddProduct,
+      wishlistAddProductVariables
+    >({
+      mutation: WishlistMutations.WishlistAddProduct,
+      variables: {
+        productId,
+      },
+    });
+
+    if (errors?.length) {
+      return {
+        error: errors,
+      };
+    }
+    return {
+      data: data?.WishlistAddProduct?.wishlist,
+    };
+  };
+
+  removeWishlistItems = async (productId: string) => {
+    const { data, errors } = await this.client.mutate<
+      wishlistRemoveProduct,
+      wishlistRemoveProductVariables
+    >({
+      mutation: WishlistMutations.WishlistRemoveProduct,
+      variables: {
+        productId,
+      },
+    });
+
+    if (errors?.length) {
+      return {
+        error: errors,
+      };
+    }
+    return {
+      data: data?.WishlistRemoveProduct?.wishlist,
+    };
   };
 
   getUser = async () => {
