@@ -14,6 +14,7 @@ import { SaleorCheckoutAPI } from "./Checkout";
 import { CollectionsAPI } from "./collections/collections";
 import { CategoriesAPI } from "./categories/categories";
 import { ProductsAPI } from "./products/products";
+import { SaleorWishlistAPI } from "./Wishlist";
 
 export * from "./Checkout";
 export * from "./Cart";
@@ -24,6 +25,8 @@ export class SaleorAPI {
   checkout: SaleorCheckoutAPI;
 
   cart: SaleorCartAPI;
+
+  wishlist: SaleorWishlistAPI;
 
   categories: CategoriesAPI;
 
@@ -41,6 +44,7 @@ export class SaleorAPI {
     auth: AuthAPI,
     checkout: SaleorCheckoutAPI,
     cart: SaleorCartAPI,
+    wishlist: SaleorWishlistAPI,
     categories: CategoriesAPI,
     collections: CollectionsAPI,
     products: ProductsAPI,
@@ -52,6 +56,7 @@ export class SaleorAPI {
     this.categories = categories;
     this.collections = collections;
     this.products = products;
+    this.wishlist = wishlist;
     this.legacyAPIProxy = legacyAPIProxy;
   }
 
@@ -103,6 +108,7 @@ export class SaleorAPI {
         saleorState,
         jobsManager
       ),
+      new SaleorWishlistAPI(localStorageManager, apolloClientManager, saleorState, jobsManager),
       new CategoriesAPI(client),
       new CollectionsAPI(client),
       new ProductsAPI(client),
