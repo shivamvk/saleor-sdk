@@ -12,10 +12,14 @@ export const getWishlist = gql`
             product {
               id
               name
+              slug
               isAvailableForPurchase
               metadata {
                 key
                 value
+              }
+              productType {
+                name
               }
               thumbnail {
                 url
@@ -29,7 +33,10 @@ export const getWishlist = gql`
                 id
                 sku
                 name
-
+                metadata {
+                  key
+                  value
+                }
                 quantityAvailable(countryCode: IN)
                 images {
                   id
