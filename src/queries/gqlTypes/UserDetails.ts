@@ -3,11 +3,12 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+
 // ====================================================
-// GraphQL query operation: UserDetails
+// GraphQL fragment: User
 // ====================================================
 
-export interface UserDetails_me_defaultShippingAddress_country {
+export interface User_defaultShippingAddress_country {
   __typename: "CountryDisplay";
   /**
    * Country code.
@@ -19,7 +20,7 @@ export interface UserDetails_me_defaultShippingAddress_country {
   country: string;
 }
 
-export interface UserDetails_me_defaultShippingAddress {
+export interface User_defaultShippingAddress {
   __typename: "Address";
   /**
    * The ID of the object.
@@ -35,7 +36,7 @@ export interface UserDetails_me_defaultShippingAddress {
   /**
    * Shop's default country.
    */
-  country: UserDetails_me_defaultShippingAddress_country;
+  country: User_defaultShippingAddress_country;
   countryArea: string;
   phone: string | null;
   /**
@@ -48,7 +49,7 @@ export interface UserDetails_me_defaultShippingAddress {
   isDefaultShippingAddress: boolean | null;
 }
 
-export interface UserDetails_me_defaultBillingAddress_country {
+export interface User_defaultBillingAddress_country {
   __typename: "CountryDisplay";
   /**
    * Country code.
@@ -60,7 +61,7 @@ export interface UserDetails_me_defaultBillingAddress_country {
   country: string;
 }
 
-export interface UserDetails_me_defaultBillingAddress {
+export interface User_defaultBillingAddress {
   __typename: "Address";
   /**
    * The ID of the object.
@@ -76,7 +77,7 @@ export interface UserDetails_me_defaultBillingAddress {
   /**
    * Shop's default country.
    */
-  country: UserDetails_me_defaultBillingAddress_country;
+  country: User_defaultBillingAddress_country;
   countryArea: string;
   phone: string | null;
   /**
@@ -89,7 +90,7 @@ export interface UserDetails_me_defaultBillingAddress {
   isDefaultShippingAddress: boolean | null;
 }
 
-export interface UserDetails_me_addresses_country {
+export interface User_addresses_country {
   __typename: "CountryDisplay";
   /**
    * Country code.
@@ -101,7 +102,7 @@ export interface UserDetails_me_addresses_country {
   country: string;
 }
 
-export interface UserDetails_me_addresses {
+export interface User_addresses {
   __typename: "Address";
   /**
    * The ID of the object.
@@ -117,7 +118,7 @@ export interface UserDetails_me_addresses {
   /**
    * Shop's default country.
    */
-  country: UserDetails_me_addresses_country;
+  country: User_addresses_country;
   countryArea: string;
   phone: string | null;
   /**
@@ -130,7 +131,7 @@ export interface UserDetails_me_addresses {
   isDefaultShippingAddress: boolean | null;
 }
 
-export interface UserDetails_me {
+export interface User {
   __typename: "User";
   /**
    * The ID of the object.
@@ -140,17 +141,16 @@ export interface UserDetails_me {
   firstName: string;
   lastName: string;
   isStaff: boolean;
-  defaultShippingAddress: UserDetails_me_defaultShippingAddress | null;
-  defaultBillingAddress: UserDetails_me_defaultBillingAddress | null;
+  metadata: User_metadata[];
+  defaultShippingAddress: User_defaultShippingAddress | null;
+  defaultBillingAddress: User_defaultBillingAddress | null;
   /**
    * List of all user's addresses.
    */
-  addresses: (UserDetails_me_addresses | null)[] | null;
+  addresses: (User_addresses | null)[] | null;
 }
 
-export interface UserDetails {
-  /**
-   * Return the currently authenticated user.
-   */
-  me: UserDetails_me | null;
+export interface User_metadata {
+  key: string;
+  value: string;
 }

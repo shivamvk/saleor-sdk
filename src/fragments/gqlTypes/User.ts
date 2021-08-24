@@ -3,6 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+
 // ====================================================
 // GraphQL fragment: User
 // ====================================================
@@ -140,10 +141,16 @@ export interface User {
   firstName: string;
   lastName: string;
   isStaff: boolean;
+  metadata: User_metadata[];
   defaultShippingAddress: User_defaultShippingAddress | null;
   defaultBillingAddress: User_defaultBillingAddress | null;
   /**
    * List of all user's addresses.
    */
   addresses: (User_addresses | null)[] | null;
+}
+
+export interface User_metadata {
+  key: string;
+  value: string;
 }
