@@ -10,6 +10,10 @@ export const userFragment = gql`
     firstName
     lastName
     isStaff
+    metadata{
+      key
+      value
+    }
     defaultShippingAddress {
       ...Address
     }
