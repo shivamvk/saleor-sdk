@@ -125,6 +125,7 @@ export class ApolloClientManager {
       variables: {
         first,
       },
+      fetchPolicy: 'network-only'
     });
 
     if (errors?.length) {
