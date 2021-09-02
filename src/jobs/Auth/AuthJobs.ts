@@ -157,6 +157,7 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
 
     this.localStorageHandler.setSignInToken(data?.token || null);
     this.localStorageHandler.setCsrfToken(data?.csrfToken || null);
+    this.localStorageHandler.setRefreshToken(data?.refreshToken || null);
 
     return {
       data,
@@ -188,7 +189,7 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
     const { data, error } = await this.apolloClientManager.verifySignInToken({
       token,
     });
-
+    console.log(JSON.stringify(data), JSON.stringify(error));
     if (error) {
       return {
         dataError: {
@@ -208,11 +209,13 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
   }: {
     refreshToken?: string;
   }): PromiseAuthJobRunResponse => {
+    console.log("sv");
     this.notifyEvent(AuthJobsEvents.SIGN_IN_TOKEN_REFRESHING, true);
+    const wrappedCsrfToken = await AsyncStorage.getItem("csrf_token");
+    const wrappedRefreshToken = await AsyncStorage.getItem("refresh_token");
+    console.log('rst', wrappedCsrfToken, wrappedRefreshToken);
 
-    const csrfToken = await LocalStorageHandler.getCsrfToken();
-
-    if (!csrfToken && !refreshToken) {
+    if (!wrappedCsrfToken && !wrappedRefreshToken) {
       return {
         dataError: {
           error: new Error(
@@ -223,11 +226,14 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
       };
     }
 
-    const { data, error } = await this.apolloClientManager.refreshSignInToken({
-      csrfToken,
-      refreshToken,
-    });
+    const csrf = JSON.parse(wrappedCsrfToken!)?.item;
+    const refresh = JSON.parse(wrappedRefreshToken!)?.item;
 
+    const { data, error } = await this.apolloClientManager.refreshSignInToken({
+      csrfToken: csrf,
+      refreshToken: refresh,
+    });
+    console.log('rst', data, error);
     if (error) {
       this.notifyEvent(AuthJobsEvents.SIGN_IN_TOKEN_REFRESHING, false);
 

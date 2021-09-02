@@ -13,6 +13,7 @@ export enum LocalStorageItems {
   JOB_QUEUE_CHECKOUT = "job_queueCheckout",
   TOKEN = "token",
   CSRF_TOKEN = "csrf_token",
+  REFRESH_TOKEN = "refresh_token",
   CHECKOUT = "data_checkout",
   PAYMENT = "data_payment",
   WISHLIST = "data_wishlist"

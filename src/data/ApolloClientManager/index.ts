@@ -316,6 +316,7 @@ export class ApolloClientManager {
       data: {
         csrfToken: data?.CreateTokenOTP?.csrfToken,
         token: data?.CreateTokenOTP?.token,
+        refreshToken: data?.CreateTokenOTP?.refreshToken,
         user: data?.CreateTokenOTP?.user,
       },
     };
