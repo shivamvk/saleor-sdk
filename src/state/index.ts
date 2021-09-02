@@ -145,10 +145,15 @@ export class SaleorState extends NamedObservable<StateItems> {
     /**
      * Before making any fetch, first try to verify token if it exists.
      */
-     const signInToken = await AsyncStorage.getItem("token");
+    const signInToken = await AsyncStorage.getItem("token");
+    const csrfToken = await AsyncStorage.getItem("csrf_token");
+    console.log('initstate', signInToken, csrfToken);
     if (signInToken) {
       this.onSignInTokenVerifyingUpdate(true);
       await this.verityToken();
+    } else {
+      this.onSignInTokenRefreshUpdate(true);
+      await this.refreshToken();
     }
     this.onSignInTokenVerifyingUpdate(false);
 
@@ -175,6 +180,25 @@ export class SaleorState extends NamedObservable<StateItems> {
     );
 
     if (dataError || !data?.isValid) {
+      await this.jobsManager.run("auth", "signOut", undefined);
+      try {
+        if (navigator.credentials?.preventSilentAccess) {
+          await navigator.credentials.preventSilentAccess();
+        }
+      } catch (credentialsError) {
+        // eslint-disable-next-line no-console
+        console.warn(BROWSER_NO_CREDENTIAL_API_MESSAGE, credentialsError);
+      }
+    }
+  };
+
+  private refreshToken = async () => {
+    const { data, dataError } = await this.jobsManager.run(
+      "auth",
+      "refreshSignInToken",
+      { refreshToken: undefined }
+    )
+    if (dataError) {
       await this.jobsManager.run("auth", "signOut", undefined);
       try {
         if (navigator.credentials?.preventSilentAccess) {
