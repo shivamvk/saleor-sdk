@@ -147,7 +147,7 @@ export class SaleorState extends NamedObservable<StateItems> {
      */
     const signInToken = await AsyncStorage.getItem("token");
     const csrfToken = await AsyncStorage.getItem("csrf_token");
-    console.log('initstate', signInToken, csrfToken);
+    ('initstate', signInToken, csrfToken);
     if (signInToken) {
       this.onSignInTokenVerifyingUpdate(true);
       await this.verityToken();
