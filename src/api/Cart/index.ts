@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LocalStorageManager } from "../../data";
 import { ErrorListener } from "../../helpers";
 import { ICheckoutModel } from "../../helpers/LocalStorageHandler";
@@ -73,7 +74,6 @@ export class SaleorCartAPI extends ErrorListener {
   addItem = async (variantId: string, quantity: number) => {
     // 1. save in local storage
     await this.localStorageManager.addItemToCart(variantId, quantity);
-    console.log('add item 86', this.saleorState.checkout);
     // 2. save online if possible (if checkout id available)
     if (this.saleorState.checkout?.lines) {
       const {
@@ -82,7 +82,6 @@ export class SaleorCartAPI extends ErrorListener {
       } = await this.apolloClientManager.getRefreshedCheckoutLines(
         this.saleorState.checkout.lines
       );
-      console.log('add item 95', data, error);
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
@@ -94,7 +93,6 @@ export class SaleorCartAPI extends ErrorListener {
     }
   };
   setCartItem = async () => {
-    console.log('setcart line 108', this.saleorState.checkout);
     if (this.saleorState.checkout?._W?.id || this.saleorState.checkout?.id) {
       this.jobsManager.addToQueue("cart", "setCartItem");
       return {
@@ -186,10 +184,25 @@ export class SaleorCartAPI extends ErrorListener {
       }
     }
     if (this.saleorState.checkout?.id) {
-      this.jobsManager.addToQueue("cart", "setCartItem");
-      return {
-        pending: true,
+      const { data, error } = await this.apolloClientManager.setCartItem(this.saleorState.checkout);
+      const wrappedItem = {
+        item: {
+          ...this.saleorState.checkout,
+          availablePaymentGateways: data?.availablePaymentGateways,
+          availableShippingMethods: data?.availableShippingMethods,
+          lines: data?.lines,
+          promoCodeDiscount: data?.promoCodeDiscount,
+          shippingMethod: data?.shippingMethod,
+        },
+        timestamp: Date.now(),
       };
+      await AsyncStorage.setItem('data_checkout', JSON.stringify(wrappedItem));
+      // this.jobsManager.addToQueue("cart", "setCartItem");
+      if (error) {
+        return { error };
+      } else if (data) {
+        return { data, quantity };
+      }
     }
     return {
       pending: false,
