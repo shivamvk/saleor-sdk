@@ -150,12 +150,12 @@ export class SaleorState extends NamedObservable<StateItems> {
     if (signInToken) {
       this.onSignInTokenVerifyingUpdate(true);
       await this.verityToken();
-    } else {
+    } else if(csrfToken){
       this.onSignInTokenRefreshUpdate(true);
       await this.refreshToken();
     }
     this.onSignInTokenVerifyingUpdate(false);
-
+    this.onSignInTokenRefreshUpdate(false);
     /**
      * Proceed with state initialization.
      */
