@@ -73,7 +73,7 @@ export class SaleorCartAPI extends ErrorListener {
   addItem = async (variantId: string, quantity: number) => {
     // 1. save in local storage
     await this.localStorageManager.addItemToCart(variantId, quantity);
-    ('add item 86', this.saleorState.checkout);
+    console.log('add item 86', this.saleorState.checkout);
     // 2. save online if possible (if checkout id available)
     if (this.saleorState.checkout?.lines) {
       const {
@@ -82,7 +82,7 @@ export class SaleorCartAPI extends ErrorListener {
       } = await this.apolloClientManager.getRefreshedCheckoutLines(
         this.saleorState.checkout.lines
       );
-      ('add item 95', data, error);
+      console.log('add item 95', data, error);
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
@@ -94,7 +94,7 @@ export class SaleorCartAPI extends ErrorListener {
     }
   };
   setCartItem = async () => {
-    ('setcart line 108', this.saleorState.checkout);
+    console.log('setcart line 108', this.saleorState.checkout);
     if (this.saleorState.checkout?._W?.id || this.saleorState.checkout?.id) {
       this.jobsManager.addToQueue("cart", "setCartItem");
       return {

@@ -40,7 +40,7 @@ class LocalStorageHandlerProxy extends NamedObservable<
     } catch (error) {
       throw new Error(error.message);
     }
-    (name, item);
+    console.log(name, item);
     this.notifyChange(name, item);
   }
   /**

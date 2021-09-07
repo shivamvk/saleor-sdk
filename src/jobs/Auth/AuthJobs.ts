@@ -189,7 +189,7 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
     const { data, error } = await this.apolloClientManager.verifySignInToken({
       token,
     });
-    (JSON.stringify(data), JSON.stringify(error));
+    console.log(JSON.stringify(data), JSON.stringify(error));
     if (error) {
       return {
         dataError: {
@@ -209,11 +209,11 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
   }: {
     refreshToken?: string;
   }): PromiseAuthJobRunResponse => {
-    ("sv");
+    console.log("sv");
     this.notifyEvent(AuthJobsEvents.SIGN_IN_TOKEN_REFRESHING, true);
     const wrappedCsrfToken = await AsyncStorage.getItem("csrf_token");
     const wrappedRefreshToken = await AsyncStorage.getItem("refresh_token");
-    ('rst', wrappedCsrfToken, wrappedRefreshToken);
+    console.log('rst', wrappedCsrfToken, wrappedRefreshToken);
 
     if (!wrappedCsrfToken && !wrappedRefreshToken) {
       return {
@@ -233,7 +233,7 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
       csrfToken: csrf,
       refreshToken: refresh,
     });
-    ('rst', data, error);
+    console.log('rst', data, error);
     if (error) {
       this.notifyEvent(AuthJobsEvents.SIGN_IN_TOKEN_REFRESHING, false);
 
