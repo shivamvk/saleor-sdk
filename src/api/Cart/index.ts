@@ -210,7 +210,7 @@ export class SaleorCartAPI extends ErrorListener {
   };
   //method to update cart with latest checkout
   updateCart = async () => {
-    if(this.saleorState.checkout?.id){
+    if(this.saleorState.checkout){
       this.jobsManager.addToQueue("cart", "setCartItem");
     }
   }
