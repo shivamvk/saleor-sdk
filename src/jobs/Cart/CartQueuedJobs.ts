@@ -34,14 +34,20 @@ export class CartQueuedJobs extends QueuedJobsHandler<ErrorCartTypes> {
         this.onErrorListener(error, ErrorCartTypes.SET_CART_ITEM);
         return { error };
       } else if (data) {
-        await this.localStorageHandler.setCheckout({
+        let obj = {
           ...(checkout?._W ? checkout?._W : checkout),
           availablePaymentGateways: data.availablePaymentGateways,
           availableShippingMethods: data.availableShippingMethods,
-          lines: data.lines,
           promoCodeDiscount: data.promoCodeDiscount,
           shippingMethod: data.shippingMethod,
-        });
+        };
+        if(checkout?.lines?.length !== data?.lines?.length){
+          obj = {
+            ...obj,
+            lines: data?.lines
+          };
+        }
+        await this.localStorageHandler.setCheckout(obj);
         return { data };
       }
     }

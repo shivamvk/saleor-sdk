@@ -42,14 +42,25 @@ export class SaleorCartAPI extends ErrorListener {
     this.saleorState.subscribeToChange(
       StateItems.CHECKOUT,
       (checkout: ICheckoutModel) => {
-        if(checkout?._W){
-          this.items = checkout?._W?.lines
-            ?.filter(line => line.quantity > 0)
-            .sort(sortCheckoutLines);
+        const checkUndefined = (lines: any) => {
+          return lines?.find((line: any) => line.id === undefined);
+        };
+        if (checkout?._W) {
+          if (this.items?.length !== checkout?._W?.lines.length || checkUndefined(this.items)) {
+            this.items = checkout?._W?.lines
+              ?.filter(line => line.quantity > 0);
+          } else {
+            this.items = this.items?.filter(line => line.quantity > 0);
+          }
+          // .sort(sortCheckoutLines);
         } else {
-          this.items = checkout?.lines
-            ?.filter(line => line.quantity > 0)
-            .sort(sortCheckoutLines);
+          if (this.items?.length !== checkout.lines?.length || checkUndefined(this.items)) {
+            this.items = checkout?.lines
+              ?.filter(line => line.quantity > 0);
+          } else {
+            this.items = this.items?.filter(line => line.quantity > 0);
+          }
+          // .sort(sortCheckoutLines);
         }
       }
     );
