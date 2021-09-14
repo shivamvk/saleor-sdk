@@ -36,6 +36,15 @@ export const ordersByUser = gql`
                 product {
                   name
                   id
+                  pricing{
+                    priceRangeUndiscounted{
+                      stop{
+                        gross{
+                          amount
+                        }
+                      }
+                    }
+                  }
                 }
               }
               thumbnail {

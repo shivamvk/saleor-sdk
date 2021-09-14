@@ -62,6 +62,23 @@ export interface OrdersByUser_me_orders_edges_node_lines_variant_product {
    * The ID of the object.
    */
   id: string;
+  pricing: OrdersByUser_me_orders_edges_node_lines_variant_product_pricing;
+}
+
+export interface OrdersByUser_me_orders_edges_node_lines_variant_product_pricing {
+  priceRangeUndiscounted: OrdersByUser_me_orders_edges_node_lines_variant_product_pricing_priceRangeUndiscounted;
+}
+
+export interface OrdersByUser_me_orders_edges_node_lines_variant_product_pricing_priceRangeUndiscounted {
+  stop: OrdersByUser_me_orders_edges_node_lines_variant_product_pricing_priceRangeUndiscounted_stop;
+}
+
+export interface OrdersByUser_me_orders_edges_node_lines_variant_product_pricing_priceRangeUndiscounted_stop {
+  gross: OrdersByUser_me_orders_edges_node_lines_variant_product_pricing_priceRangeUndiscounted_stop_gross;
+}
+
+export interface OrdersByUser_me_orders_edges_node_lines_variant_product_pricing_priceRangeUndiscounted_stop_gross {
+  amount: number;
 }
 
 export interface OrdersByUser_me_orders_edges_node_lines_variant {
