@@ -23,6 +23,28 @@ export const updateCheckoutLineMutation = gql`
   }
 `;
 
+export const updateCheckoutAddressType = gql`
+  mutation UpdateCheckoutAddressType($addressId: ID!, $type: AddressTypes!) {
+    addressTypeUpdate(addressId: $addressId, type: $type) {
+      addressLink {
+        id
+        address {
+          id
+          firstName
+          lastName
+          streetAddress1
+          streetAddress2
+          city
+          cityArea
+          postalCode
+          phone
+        }
+        type
+      }
+    }
+  }
+`;
+
 export const createCheckoutMutation = gql`
   ${checkoutFragment}
   ${checkoutErrorFragment}

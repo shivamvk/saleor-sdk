@@ -92,6 +92,24 @@ export enum CollectionSortField {
 /**
  * An enumeration.
  */
+export enum AddressTypeType {
+  ADDRESSTYPES_HOME = "ADDRESSTYPES_HOME",
+  ADDRESSTYPES_OTHER = "ADDRESSTYPES_OTHER",
+  ADDRESSTYPES_OFFICE = "ADDRESSTYPES_OFFICE",
+}
+
+/**
+ * An enumeration.
+ */
+export enum AddressTypes {
+  HOME = "HOME",
+  OTHER = "OTHER",
+  OFFICE = "OFFICE",
+}
+
+/**
+ * An enumeration.
+ */
 export enum CountryCode {
   AD = "AD",
   AE = "AE",
@@ -374,7 +392,7 @@ export enum OrderStatus {
 /**
  * An enumeration.
  */
- export enum OTPErrorCodeEnum {
+export enum OTPErrorCodeEnum {
   INVALID_OTP = "INVALID_OTP",
   INVALID_PHONE = "INVALID_PHONE",
 }

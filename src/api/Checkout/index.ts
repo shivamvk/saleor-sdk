@@ -1,3 +1,4 @@
+import { AddressTypes } from "src";
 import { PaymentGateway } from "../../fragments/gqlTypes/PaymentGateway";
 import { ErrorListener } from "../../helpers";
 import {
@@ -117,7 +118,7 @@ export class SaleorCheckoutAPI extends ErrorListener {
     shippingAddress: IAddress,
     email: string
   ): CheckoutResponse => {
-    const co = this.saleorState.checkout?._W? this.saleorState.checkout?._W : this.saleorState.checkout;
+    const co = this.saleorState.checkout?._W ? this.saleorState.checkout?._W : this.saleorState.checkout;
     const checkoutId = co.id;
     const alteredLines = co?.lines?.map(item => ({
       quantity: item!.quantity,
@@ -170,11 +171,24 @@ export class SaleorCheckoutAPI extends ErrorListener {
     };
   };
 
+  setAddressType = async (addressId: string, type: AddressTypes) => {
+    const { data, dataError } = await this.jobsManager.run(
+      "checkout",
+      "setAddressType",
+      { addressId, type }
+    );
+
+    return {
+      data,
+      dataError,
+    };
+  };
+
   setBillingAddress = async (
     billingAddress: IAddress,
     email?: string
   ): CheckoutResponse => {
-    const co = this.saleorState.checkout?._W? this.saleorState.checkout?._W : this.saleorState.checkout;
+    const co = this.saleorState.checkout?._W ? this.saleorState.checkout?._W : this.saleorState.checkout;
     const checkoutId = co?.id;
     const isShippingRequiredForProducts = co?.lines
       ?.filter(line => line.quantity > 0)
@@ -437,7 +451,7 @@ export class SaleorCheckoutAPI extends ErrorListener {
   completeCheckout = async (
     input?: CompleteCheckoutInput
   ): CheckoutResponse => {
-    const co = this.saleorState.checkout?._W? this.saleorState.checkout?._W : this.saleorState.checkout;
+    const co = this.saleorState.checkout?._W ? this.saleorState.checkout?._W : this.saleorState.checkout;
     const checkoutId = co?.id;
     if (checkoutId) {
       const { data, dataError } = await this.jobsManager.run(

@@ -4,6 +4,7 @@ import { Checkout } from "../../fragments/gqlTypes/Checkout";
 import { Payment } from "../../fragments/gqlTypes/Payment";
 import { User } from "../../fragments/gqlTypes/User";
 import { CountryCode } from "../../gqlTypes/globalTypes";
+import { AddressTypes } from "src";
 import {
   ICheckoutAddress,
   ICheckoutModel,
@@ -95,6 +96,7 @@ import { Wishlist, WishlistVariables } from "../../queries/gqlTypes/Wishlist";
 import { getWishlist } from "../../queries/wishlist";
 import { wishlistAddProduct, wishlistAddProductVariables } from "../../mutations/gqlTypes/wishlistAddProduct";
 import { wishlistRemoveProduct, wishlistRemoveProductVariables } from "../../mutations/gqlTypes/wishlistRemoveProduct";
+import { UpdateCheckoutAddressType, UpdateCheckoutAddressTypeVariables } from "src/mutations/gqlTypes/UpdateCheckoutAddressType";
 
 export class ApolloClientManager {
   private client: ApolloClient<any>;
@@ -500,56 +502,56 @@ export class ApolloClientManager {
 
     const linesWithMissingVariantUpdated = variants
       ? variants.edges.map(edge => {
-          const existingLine = checkoutlines?.find(
-            line => line.variant.id === edge.node.id
-          );
-          const variantPricing = edge.node.pricing?.price;
-          const totalPrice = variantPricing
-            ? {
-                gross: {
-                  ...variantPricing.gross,
-                  amount:
-                    variantPricing.gross.amount * (existingLine?.quantity || 0),
-                },
-                net: {
-                  ...variantPricing.net,
-                  amount:
-                    variantPricing.net.amount * (existingLine?.quantity || 0),
-                },
-              }
-            : null;
-
-          return {
-            id: existingLine?.variant?.id,
-            quantity: existingLine?.quantity || 0,
-            totalPrice,
-            variant: {
-              attributes: edge.node.attributes,
-              id: edge.node.id,
-              isAvailable: edge.node.isAvailable,
-              name: edge.node.name,
-              pricing: edge.node.pricing,
-              product: edge.node.product,
-              quantityAvailable: edge.node.quantityAvailable,
-              sku: edge.node.sku,
+        const existingLine = checkoutlines?.find(
+          line => line.variant.id === edge.node.id
+        );
+        const variantPricing = edge.node.pricing?.price;
+        const totalPrice = variantPricing
+          ? {
+            gross: {
+              ...variantPricing.gross,
+              amount:
+                variantPricing.gross.amount * (existingLine?.quantity || 0),
             },
-          };
-        })
+            net: {
+              ...variantPricing.net,
+              amount:
+                variantPricing.net.amount * (existingLine?.quantity || 0),
+            },
+          }
+          : null;
+
+        return {
+          id: existingLine?.variant?.id,
+          quantity: existingLine?.quantity || 0,
+          totalPrice,
+          variant: {
+            attributes: edge.node.attributes,
+            id: edge.node.id,
+            isAvailable: edge.node.isAvailable,
+            name: edge.node.name,
+            pricing: edge.node.pricing,
+            product: edge.node.product,
+            quantityAvailable: edge.node.quantityAvailable,
+            sku: edge.node.sku,
+          },
+        };
+      })
       : [];
 
     const linesWithProperVariantUpdated = linesWithProperVariant.map(line => {
       const variantPricing = line.variant.pricing?.price;
       const totalPrice = variantPricing
         ? {
-            gross: {
-              ...variantPricing.gross,
-              amount: variantPricing.gross.amount * line.quantity,
-            },
-            net: {
-              ...variantPricing.net,
-              amount: variantPricing.net.amount * line.quantity,
-            },
-          }
+          gross: {
+            ...variantPricing.gross,
+            amount: variantPricing.gross.amount * line.quantity,
+          },
+          net: {
+            ...variantPricing.net,
+            amount: variantPricing.net.amount * line.quantity,
+          },
+        }
         : null;
 
       return {
@@ -582,7 +584,7 @@ export class ApolloClientManager {
             companyName: billingAddress.companyName,
             country:
               CountryCode[
-                billingAddress?.country?.code as keyof typeof CountryCode
+              billingAddress?.country?.code as keyof typeof CountryCode
               ],
             countryArea: billingAddress.countryArea,
             firstName: billingAddress.firstName,
@@ -599,7 +601,7 @@ export class ApolloClientManager {
             companyName: shippingAddress.companyName,
             country:
               CountryCode[
-                shippingAddress?.country?.code as keyof typeof CountryCode
+              shippingAddress?.country?.code as keyof typeof CountryCode
               ],
             countryArea: shippingAddress.countryArea,
             firstName: shippingAddress.firstName,
@@ -704,7 +706,7 @@ export class ApolloClientManager {
           companyName: shippingAddress.companyName,
           country:
             CountryCode[
-              shippingAddress?.country?.code as keyof typeof CountryCode
+            shippingAddress?.country?.code as keyof typeof CountryCode
             ],
           countryArea: shippingAddress.countryArea,
           firstName: shippingAddress.firstName,
@@ -753,6 +755,35 @@ export class ApolloClientManager {
     }
   };
 
+  setAddressType = async (addressId: string, type: AddressTypes) => {
+    try {
+      const { data, errors } = await this.client.mutate<
+        UpdateCheckoutAddressType,
+        UpdateCheckoutAddressTypeVariables
+      >({
+        mutation: CheckoutMutations.updateCheckoutAddressType,
+        variables: { addressId, type },
+      });
+
+      if (errors?.length) {
+        return {
+          error: errors,
+        };
+      }
+      if (
+        data?.addressTypeUpdate?.addressLink?.id &&
+        data?.addressTypeUpdate?.addressLink?.type
+      ) {
+        return { data };
+      }
+      return {};
+    } catch (error) {
+      return {
+        error,
+      };
+    }
+  };
+
   setBillingAddress = async (
     billingAddress: ICheckoutAddress,
     checkoutId: string
@@ -764,7 +795,7 @@ export class ApolloClientManager {
           companyName: billingAddress.companyName,
           country:
             CountryCode[
-              billingAddress?.country?.code as keyof typeof CountryCode
+            billingAddress?.country?.code as keyof typeof CountryCode
             ],
           countryArea: billingAddress.countryArea,
           firstName: billingAddress.firstName,
@@ -821,7 +852,7 @@ export class ApolloClientManager {
           companyName: billingAddress.companyName,
           country:
             CountryCode[
-              billingAddress?.country?.code as keyof typeof CountryCode
+            billingAddress?.country?.code as keyof typeof CountryCode
             ],
           countryArea: billingAddress.countryArea,
           firstName: billingAddress.firstName,
@@ -997,7 +1028,7 @@ export class ApolloClientManager {
             companyName: billingAddress.companyName,
             country:
               CountryCode[
-                billingAddress?.country?.code as keyof typeof CountryCode
+              billingAddress?.country?.code as keyof typeof CountryCode
               ],
             countryArea: billingAddress.countryArea,
             firstName: billingAddress.firstName,
