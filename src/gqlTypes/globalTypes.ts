@@ -104,7 +104,7 @@ export enum AddressTypeType {
 export enum AddressTypes {
   HOME = "HOME",
   OTHER = "OTHER",
-  OFFICE = "OFFICE",
+  OFFICE = "WORK",
 }
 
 /**
