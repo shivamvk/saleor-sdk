@@ -88,6 +88,7 @@ export class SaleorCheckoutAPI extends ErrorListener {
         this.availableShippingMethods = availableShippingMethods;
         this.billingAsShipping = billingAsShipping;
         this.promoCodeDiscount = {
+          discount: promoCodeDiscount?.discount,
           discountName: promoCodeDiscount?.discountName,
           voucherCode: promoCodeDiscount?.voucherCode,
         };

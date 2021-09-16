@@ -37,6 +37,12 @@ export interface IShippingMethod {
 export interface IPromoCodeDiscount {
   voucherCode?: string | null;
   discountName?: string | null;
+  discount?: IPromoCodeDiscountDiscount | null;
+}
+
+export interface IPromoCodeDiscountDiscount {
+  amount: number;
+  currency: string;
 }
 
 export type ICreditCard = IPaymentCreditCard;

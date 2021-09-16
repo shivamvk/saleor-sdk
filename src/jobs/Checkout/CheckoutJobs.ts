@@ -277,7 +277,7 @@ class CheckoutJobs extends JobsHandler<{}> {
     }
 
     await this.localStorageHandler.setCheckout({
-      ...checkout,
+      ...(checkout?._W ? checkout?._W : checkout),
       promoCodeDiscount: data?.promoCodeDiscount,
     });
     return { data };
@@ -304,7 +304,7 @@ class CheckoutJobs extends JobsHandler<{}> {
     }
 
     await this.localStorageHandler.setCheckout({
-      ...checkout,
+      ...(checkout?._W ? checkout?._W : checkout),
       promoCodeDiscount: data?.promoCodeDiscount,
     });
     return { data };
