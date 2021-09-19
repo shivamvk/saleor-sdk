@@ -54,7 +54,7 @@ export class SaleorCartAPI extends ErrorListener {
           }
           // .sort(sortCheckoutLines);
         } else {
-          if (this.items?.length !== checkout.lines?.length || checkUndefined(this.items)) {
+          if (this.items?.length !== checkout?.lines?.length || checkUndefined(this.items)) {
             this.items = checkout?.lines
               ?.filter(line => line.quantity > 0);
           } else {
@@ -91,7 +91,7 @@ export class SaleorCartAPI extends ErrorListener {
         data,
         error,
       } = await this.apolloClientManager.getRefreshedCheckoutLines(
-        this.saleorState.checkout.lines
+        this.saleorState.checkout?.lines
       );
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
@@ -123,7 +123,7 @@ export class SaleorCartAPI extends ErrorListener {
         data,
         error,
       } = await this.apolloClientManager.getRefreshedCheckoutLines(
-        this.saleorState.checkout.lines
+        this.saleorState.checkout?.lines
       );
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
@@ -153,7 +153,7 @@ export class SaleorCartAPI extends ErrorListener {
         data,
         error,
       } = await this.apolloClientManager.getRefreshedCheckoutLines(
-        this.saleorState.checkout.lines
+        this.saleorState.checkout?.lines
       );
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
@@ -183,7 +183,7 @@ export class SaleorCartAPI extends ErrorListener {
         data,
         error,
       } = await this.apolloClientManager.getRefreshedCheckoutLines(
-        this.saleorState.checkout.lines
+        this.saleorState.checkout?.lines
       );
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
