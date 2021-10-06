@@ -187,6 +187,45 @@ export class AuthAPI extends ErrorListener {
     };
   };
 
+  signUpMobile = async (
+    otp: string,
+    phone: string
+    // autoSignIn: boolean
+  ): PromiseRunResponse<DataErrorAuthTypes> => {
+    const { data, dataError } = await this.jobsManager.run(
+      "auth",
+      "confirmAccountV2",
+      {
+        otp,
+        phone,
+      }
+    );
+
+    if (dataError) {
+      return {
+        data,
+        dataError,
+        pending: false,
+      };
+    }
+
+    const {
+      data: userData,
+      dataError: userDataError,
+    } = await this.jobsManager.run("auth", "provideUser", undefined);
+    if (this.config.loadOnStart.checkout) {
+      await this.jobsManager.run("checkout", "provideCheckout", {
+        isUserSignedIn: !!data?.user,
+      });
+    }
+
+    return {
+      data: userData,
+      dataError: userDataError,
+      pending: false,
+    };
+  };
+
   /**
    * Tries to authenticate user with given email and password.
    * @param email Email used for authentication.

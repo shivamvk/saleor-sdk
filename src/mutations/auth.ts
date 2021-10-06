@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { userFragment } from "src/fragments/auth";
 
 import { accountErrorFragment } from "../fragments/errors";
 
@@ -72,6 +73,28 @@ export const createOTPTokeMutation = gql`
       }
       otpErrors {
         code
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const CONFIRM_ACCOUNT = gql`
+  ${userFragment}
+  mutation ConfirmAccountV2($otp: String!, $phone: String!) {
+    confirmAccountV2(otp: $otp, phone: $phone) {
+      token
+      refreshToken
+      csrfToken
+      user {
+        ...User
+      }
+      accountErrors {
+        field
+        message
+      }
+      errors {
         field
         message
       }

@@ -164,6 +164,36 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
     };
   };
 
+  confirmAccountV2 = async ({
+    otp,
+    phone,
+  }: {
+    otp: string;
+    phone: string;
+  }): PromiseAuthJobRunResponse => {
+    const { data, error } = await this.apolloClientManager.confirmAccountV2(
+      otp,
+      phone
+    );
+
+    if (error) {
+      return {
+        dataError: {
+          error,
+          type: DataErrorAuthTypes.SIGN_IN,
+        },
+      };
+    }
+
+    this.localStorageHandler.setSignInToken(data?.token || null);
+    this.localStorageHandler.setCsrfToken(data?.csrfToken || null);
+    this.localStorageHandler.setRefreshToken(data?.refreshToken || null);
+
+    return {
+      data,
+    };
+  };
+
   signOut = async (): PromiseAuthJobRunResponse => {
     await this.localStorageHandler.clear();
 

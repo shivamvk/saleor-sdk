@@ -97,6 +97,7 @@ import { getWishlist } from "../../queries/wishlist";
 import { wishlistAddProduct, wishlistAddProductVariables } from "../../mutations/gqlTypes/wishlistAddProduct";
 import { wishlistRemoveProduct, wishlistRemoveProductVariables } from "../../mutations/gqlTypes/wishlistRemoveProduct";
 import { UpdateCheckoutAddressType, UpdateCheckoutAddressTypeVariables } from "src/mutations/gqlTypes/UpdateCheckoutAddressType";
+import { ConfirmAccountV2, ConfirmAccountV2Variables } from "src/mutations/gqlTypes/CreateAccountV2";
 
 export class ApolloClientManager {
   private client: ApolloClient<any>;
@@ -287,6 +288,44 @@ export class ApolloClientManager {
         csrfToken: data?.tokenCreate?.csrfToken,
         token: data?.tokenCreate?.token,
         user: data?.tokenCreate?.user,
+      },
+    };
+  };
+
+  confirmAccountV2 = async (otp: string, phone: string) => {
+    const { data, errors } = await this.client.mutate<
+      ConfirmAccountV2,
+      ConfirmAccountV2Variables
+    >({
+      fetchPolicy: "no-cache",
+      mutation: AuthMutations.CONFIRM_ACCOUNT,
+      variables: {
+        otp,
+        phone,
+      },
+    });
+
+    if (errors?.length) {
+      return {
+        error: errors,
+      };
+    }
+    if (data?.confirmAccountV2?.errors.length) {
+      return {
+        error: data.confirmAccountV2.errors,
+      };
+    }
+    if (data?.confirmAccountV2?.accountErrors.length) {
+      return {
+        error: data.confirmAccountV2.accountErrors,
+      };
+    }
+    return {
+      data: {
+        csrfToken: data?.confirmAccountV2?.csrfToken,
+        token: data?.confirmAccountV2?.token,
+        refreshToken: data?.confirmAccountV2?.refreshToken,
+        user: data?.confirmAccountV2?.user,
       },
     };
   };
