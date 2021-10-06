@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { userFragment } from "src/fragments/auth";
+import { userFragment } from "../fragments/auth";
 
 import { accountErrorFragment } from "../fragments/errors";
 
