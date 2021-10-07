@@ -43,7 +43,7 @@ export const checkoutProductVariantFragment = gql`
     sku
     quantityAvailable
     isAvailable
-    image {
+    images {
       url
     }
     pricing {
