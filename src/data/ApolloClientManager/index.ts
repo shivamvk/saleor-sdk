@@ -1197,6 +1197,8 @@ export class ApolloClientManager {
             product: itemVariant?.product,
             quantityAvailable: itemVariant?.quantityAvailable,
             sku: itemVariant?.sku,
+            // @ts-ignore
+            images: itemVariant?.images
           },
         };
       }),
