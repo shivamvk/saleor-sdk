@@ -348,4 +348,14 @@ export class AuthAPI extends ErrorListener {
   };
 
   private autoSignIn = async () => { };
+
+  setUserAvatar = (url: string) => {
+    if (this.user) {
+      this.user.avatar = {
+        url
+      };
+      this.saleorState.loadUser();
+    }
+  }
+
 }

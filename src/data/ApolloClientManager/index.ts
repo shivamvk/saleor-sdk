@@ -113,7 +113,7 @@ export class ApolloClientManager {
   ) => {
     this.client
       .watchQuery<UserDetails, any>({
-        fetchPolicy: "cache-only",
+        fetchPolicy: "cache-and-network",
         query: UserQueries.getUserDetailsQuery,
       })
       .subscribe(value => next(value.data?.me), error, complete);

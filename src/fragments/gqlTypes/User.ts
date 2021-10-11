@@ -141,6 +141,7 @@ export interface User {
   firstName: string;
   lastName: string;
   isStaff: boolean;
+  avatar?: User_avatar | null;
   metadata: User_metadata[];
   defaultShippingAddress: User_defaultShippingAddress | null;
   defaultBillingAddress: User_defaultBillingAddress | null;
@@ -148,6 +149,10 @@ export interface User {
    * List of all user's addresses.
    */
   addresses: (User_addresses | null)[] | null;
+}
+
+export interface User_avatar {
+  url?: string | null;
 }
 
 export interface User_metadata {

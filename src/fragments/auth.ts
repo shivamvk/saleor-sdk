@@ -10,6 +10,9 @@ export const userFragment = gql`
     firstName
     lastName
     isStaff
+    avatar {
+      url
+    }
     metadata{
       key
       value
