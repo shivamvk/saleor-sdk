@@ -1,5 +1,7 @@
+import { ApolloLink } from "@apollo/client";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import { RetryLink } from "@apollo/client/link/retry";
+import { extractFiles } from 'extract-files';
 import { createUploadLink } from 'apollo-upload-client';
 import { authLink, invalidTokenLinkWithTokenHandler } from "./auth";
 
@@ -26,13 +28,18 @@ export const createSaleorLinks = ({
     tokenExpirationCallback
   );
 
+  const batchAndUploadLink = ApolloLink.split(
+    operation => extractFiles(operation).files.size > 0,
+    createUploadLink({
+      uri: apiUrl,
+    }),
+    new BatchHttpLink({ credentials: "include", uri: apiUrl })
+  );
+
   return [
     invalidTokenLink,
     authLink,
     new RetryLink(),
-    new BatchHttpLink({ credentials: "include", uri: apiUrl }),
-    createUploadLink({
-      uri: apiUrl
-    })
+    batchAndUploadLink
   ];
 };

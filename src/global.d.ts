@@ -7,3 +7,6 @@ declare interface Window {
 declare interface Navigator {
   credentials: any;
 }
+
+declare module 'apollo-upload-client';
+declare module 'extract-files';
