@@ -31,6 +31,7 @@ export const createSaleorLinks = ({
   const batchAndUploadLink = ApolloLink.split(
     operation => extractFiles(operation).files.size > 0,
     createUploadLink({
+      credentials: "include",
       uri: apiUrl,
     }),
     new BatchHttpLink({ credentials: "include", uri: apiUrl })
