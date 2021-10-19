@@ -15,6 +15,10 @@ export const WishlistAddProduct = gql`
                 product {
                   id
                   name
+                  slug
+                  productType {
+                    name
+                  }
                   isAvailableForPurchase
                   metadata {
                     key
@@ -135,6 +139,10 @@ export const WishlistRemoveProduct = gql`
                 product {
                   id
                   name
+                  slug
+                  productType {
+                    name
+                  }
                   isAvailableForPurchase
                   metadata {
                     key

@@ -41,7 +41,7 @@ export class LocalStorageManager {
     }
     const alteredCheckout = this.saleorState.checkout
       ? {
-          ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W : this.saleorState.checkout),
+          ...this.saleorState.checkout,
           lines: alteredLines,
         }
       : {
@@ -66,8 +66,8 @@ export class LocalStorageManager {
     }
     const alteredCheckout = this.saleorState.checkout
       ? {
-        ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W : this.saleorState.checkout),
-        lines: alteredLines,
+          ...this.saleorState.checkout,
+          lines: alteredLines,
         }
       : {
           lines: alteredLines,
@@ -94,8 +94,8 @@ export class LocalStorageManager {
     }
     const alteredCheckout = this.saleorState.checkout
       ? {
-        ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W : this.saleorState.checkout),
-        lines: alteredLines,
+          ...this.saleorState.checkout,
+          lines: alteredLines,
         }
       : {
           lines: alteredLines,
@@ -119,8 +119,8 @@ export class LocalStorageManager {
     }
     const alteredCheckout = this.saleorState.checkout
       ? {
-        ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W : this.saleorState.checkout),
-        lines: alteredLines,
+          ...this.saleorState.checkout,
+          lines: alteredLines,
         }
       : {
           lines: alteredLines,

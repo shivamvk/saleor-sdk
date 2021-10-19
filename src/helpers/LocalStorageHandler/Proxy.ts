@@ -28,10 +28,10 @@ class LocalStorageHandlerProxy extends NamedObservable<
         item,
         timestamp: Date.now(),
       };
-      if(name === LocalStorageItems.CHECKOUT){
-        if(item?._W){
-          await AsyncStorage.setItem(name, JSON.stringify(item._W || {}));
-        } else{
+      if (name === LocalStorageItems.CHECKOUT) {
+        if (item) {
+          await AsyncStorage.setItem(name, JSON.stringify(item || {}));
+        } else {
           await AsyncStorage.setItem(name, JSON.stringify(item || {}));
         }
       } else {
@@ -60,7 +60,7 @@ class LocalStorageHandlerProxy extends NamedObservable<
         await AsyncStorage.removeItem(name);
         return null;
       }
-      if(name === "data_checkout"){
+      if (name === "data_checkout") {
         return item;
       } else {
         return item.value;

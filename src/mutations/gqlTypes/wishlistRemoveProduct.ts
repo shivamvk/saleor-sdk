@@ -7,6 +7,11 @@
 // GraphQL mutation operation: wishlistRemoveProduct
 // ====================================================
 
+export interface wishlistRemoveProduct_WishlistRemoveProduct_wishlist_wishlist_items_edges_node_product_productType {
+  __typename: "ProductType";
+  name: string;
+}
+
 export interface wishlistRemoveProduct_WishlistRemoveProduct_wishlist_wishlist_items_edges_node_product_metadata {
   __typename: "MetadataItem";
   /**
@@ -350,6 +355,8 @@ export interface wishlistRemoveProduct_WishlistRemoveProduct_wishlist_wishlist_i
    */
   id: string;
   name: string;
+  slug: string;
+  productType: wishlistRemoveProduct_WishlistRemoveProduct_wishlist_wishlist_items_edges_node_product_productType;
   /**
    * Whether the product is available for purchase.
    */

@@ -23,28 +23,28 @@ export class CartQueuedJobs extends QueuedJobsHandler<ErrorCartTypes> {
 
   setCartItem = async () => {
     let checkout = await LocalStorageHandler.getCheckout();
-    if (checkout?.timestamp) {
-      checkout = checkout?.item;
-    }
+    // if (checkout?.timestamp) {
+    //   checkout = checkout?.item;
+    // }
     if (checkout) {
       const { data, error } = await this.apolloClientManager.setCartItem(
-        checkout?._W ? checkout?._W : checkout
+        checkout
       );
       if (error && this.onErrorListener) {
         this.onErrorListener(error, ErrorCartTypes.SET_CART_ITEM);
         return { error };
       } else if (data) {
         let obj = {
-          ...(checkout?._W ? checkout?._W : checkout),
+          ...checkout,
           availablePaymentGateways: data.availablePaymentGateways,
           availableShippingMethods: data.availableShippingMethods,
           promoCodeDiscount: data.promoCodeDiscount,
           shippingMethod: data.shippingMethod,
         };
-        if(checkout?.lines?.length !== data?.lines?.length){
+        if (checkout?.lines?.length !== data?.lines?.length) {
           obj = {
             ...obj,
-            lines: data?.lines
+            lines: data?.lines,
           };
         }
         await this.localStorageHandler.setCheckout(obj);

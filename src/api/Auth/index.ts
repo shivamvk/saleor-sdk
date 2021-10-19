@@ -416,6 +416,7 @@ export class AuthAPI extends ErrorListener {
   setUserAvatar = (url: string) => {
     if (this.user) {
       this.user.avatar = {
+        __typename: "Image",
         url,
       };
       this.saleorState.loadUser();

@@ -7,6 +7,11 @@
 // GraphQL query operation: Wishlist
 // ====================================================
 
+export interface Wishlist_wishlist_items_edges_node_product_productType {
+  __typename: "ProductType";
+  name: string;
+}
+
 export interface Wishlist_wishlist_items_edges_node_product_metadata {
   __typename: "MetadataItem";
   /**
@@ -17,11 +22,6 @@ export interface Wishlist_wishlist_items_edges_node_product_metadata {
    * Value of a metadata item.
    */
   value: string;
-}
-
-export interface Wishlist_wishlist_items_edges_node_product_productType {
-  __typename: "ProductType";
-  name: string;
 }
 
 export interface Wishlist_wishlist_items_edges_node_product_thumbnail {
@@ -38,23 +38,11 @@ export interface Wishlist_wishlist_items_edges_node_product_images {
    * The ID of the object.
    */
   id: string;
+  alt: string;
   /**
    * The URL of the image.
    */
   url: string;
-  alt: string;
-}
-
-export interface Wishlist_wishlist_items_edges_node_product_variants_metadata {
-  __typename: "MetadataItem";
-  /**
-   * Key of a metadata item.
-   */
-  key: string;
-  /**
-   * Value of a metadata item.
-   */
-  value: string;
 }
 
 export interface Wishlist_wishlist_items_edges_node_product_variants_images {
@@ -166,10 +154,6 @@ export interface Wishlist_wishlist_items_edges_node_product_variants {
   id: string;
   sku: string;
   name: string;
-  /**
-   * List of public metadata items. Can be accessed without permissions.
-   */
-  metadata: (Wishlist_wishlist_items_edges_node_product_variants_metadata | null)[];
   /**
    * Quantity of a product available for sale in one checkout.
    */
@@ -372,6 +356,7 @@ export interface Wishlist_wishlist_items_edges_node_product {
   id: string;
   name: string;
   slug: string;
+  productType: Wishlist_wishlist_items_edges_node_product_productType;
   /**
    * Whether the product is available for purchase.
    */
@@ -380,7 +365,6 @@ export interface Wishlist_wishlist_items_edges_node_product {
    * List of public metadata items. Can be accessed without permissions.
    */
   metadata: (Wishlist_wishlist_items_edges_node_product_metadata | null)[];
-  productType: Wishlist_wishlist_items_edges_node_product_productType;
   /**
    * The main thumbnail for a product.
    */

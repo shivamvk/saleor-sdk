@@ -53,7 +53,7 @@ export class SaleorWishlistAPI extends ErrorListener {
 
     this.saleorState.loadWishlist();
   }
-  
+
   getWishlist = async () => {
     const { data, dataError } = await this.jobsManager.run(
       "wishlist",

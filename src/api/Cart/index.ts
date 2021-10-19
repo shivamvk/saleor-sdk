@@ -7,7 +7,7 @@ import { ErrorCartTypes } from "../../jobs/Cart";
 import { SaleorState, SaleorStateLoaded } from "../../state";
 import { ISaleorStateSummeryPrices, StateItems } from "../../state/types";
 import { ApolloClientManager } from "../../data/ApolloClientManager";
-import { sortCheckoutLines } from "./utils";
+// import { sortCheckoutLines } from "./utils";
 import {
   IDiscount,
   IItems,
@@ -45,18 +45,22 @@ export class SaleorCartAPI extends ErrorListener {
         const checkUndefined = (lines: any) => {
           return lines?.find((line: any) => line.id === undefined);
         };
-        if (checkout?._W) {
-          if (this.items?.length !== checkout?._W?.lines.length || checkUndefined(this.items)) {
-            this.items = checkout?._W?.lines
-              ?.filter(line => line.quantity > 0);
+        if (checkout?.id) {
+          if (
+            this.items?.length !== checkout?.lines?.length ||
+            checkUndefined(this.items)
+          ) {
+            this.items = checkout?.lines?.filter(line => line.quantity > 0);
           } else {
             this.items = this.items?.filter(line => line.quantity > 0);
           }
           // .sort(sortCheckoutLines);
         } else {
-          if (this.items?.length !== checkout?.lines?.length || checkUndefined(this.items)) {
-            this.items = checkout?.lines
-              ?.filter(line => line.quantity > 0);
+          if (
+            this.items?.length !== checkout?.lines?.length ||
+            checkUndefined(this.items)
+          ) {
+            this.items = checkout?.lines?.filter(line => line.quantity > 0);
           } else {
             this.items = this.items?.filter(line => line.quantity > 0);
           }
@@ -97,14 +101,14 @@ export class SaleorCartAPI extends ErrorListener {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
         await this.localStorageManager.getHandler().setCheckout({
-          ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
+          ...this.saleorState.checkout,
           lines: data,
         });
       }
     }
   };
   setCartItem = async () => {
-    if (this.saleorState.checkout?._W?.id || this.saleorState.checkout?.id) {
+    if (this.saleorState.checkout?.id) {
       this.jobsManager.addToQueue("cart", "setCartItem");
       return {
         pending: true,
@@ -113,7 +117,7 @@ export class SaleorCartAPI extends ErrorListener {
     return {
       pending: false,
     };
-  }
+  };
   removeItem = async (variantId: string) => {
     // 1. save in local storage
     this.localStorageManager.removeItemFromCart(variantId);
@@ -159,7 +163,7 @@ export class SaleorCartAPI extends ErrorListener {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
         await this.localStorageManager.getHandler().setCheckout({
-          ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
+          ...this.saleorState.checkout,
           lines: data,
         });
       }
@@ -189,13 +193,15 @@ export class SaleorCartAPI extends ErrorListener {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
         await this.localStorageManager.getHandler().setCheckout({
-          ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
+          ...this.saleorState.checkout,
           lines: data,
         });
       }
     }
     if (this.saleorState.checkout?.id) {
-      const { data, error } = await this.apolloClientManager.setCartItem(this.saleorState.checkout);
+      const { data, error } = await this.apolloClientManager.setCartItem(
+        this.saleorState.checkout
+      );
       const wrappedItem = {
         item: {
           ...this.saleorState.checkout,
@@ -207,7 +213,7 @@ export class SaleorCartAPI extends ErrorListener {
         },
         timestamp: Date.now(),
       };
-      await AsyncStorage.setItem('data_checkout', JSON.stringify(wrappedItem));
+      await AsyncStorage.setItem("data_checkout", JSON.stringify(wrappedItem));
       // this.jobsManager.addToQueue("cart", "setCartItem");
       if (error) {
         return { error };
@@ -221,8 +227,8 @@ export class SaleorCartAPI extends ErrorListener {
   };
   //method to update cart with latest checkout
   updateCart = async () => {
-    if(this.saleorState.checkout){
+    if (this.saleorState.checkout) {
       this.jobsManager.addToQueue("cart", "setCartItem");
     }
-  }
+  };
 }

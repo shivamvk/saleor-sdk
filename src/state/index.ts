@@ -56,6 +56,8 @@ export class SaleorState extends NamedObservable<StateItems> {
 
   summaryPrices?: ISaleorStateSummeryPrices;
 
+  wishlist?: IWishlistModel;
+
   // Should be changed it in future to shop object containing payment gateways besides all the shop data
   availablePaymentGateways?: PaymentGateway[] | null;
 
@@ -150,7 +152,7 @@ export class SaleorState extends NamedObservable<StateItems> {
     if (signInToken) {
       this.onSignInTokenVerifyingUpdate(true);
       await this.verityToken();
-    } else if(csrfToken){
+    } else if (csrfToken) {
       this.onSignInTokenRefreshUpdate(true);
       await this.refreshToken();
     }
@@ -196,7 +198,9 @@ export class SaleorState extends NamedObservable<StateItems> {
       "auth",
       "refreshSignInToken",
       { refreshToken: undefined }
-    )
+    );
+    if (data) {
+    }
     if (dataError) {
       await this.jobsManager.run("auth", "signOut", undefined);
       try {
