@@ -4,6 +4,7 @@ import { RetryLink } from "@apollo/client/link/retry";
 import { extractFiles } from 'extract-files';
 import { createUploadLink } from 'apollo-upload-client';
 import { authLink, invalidTokenLinkWithTokenHandler } from "./auth";
+import { setContext } from "@apollo/client/link/context";
 
 interface SaleorLinksConfig {
   /**
@@ -14,6 +15,8 @@ interface SaleorLinksConfig {
    * Callback called when token expiration error occured in Saleor API response.
    */
   tokenExpirationCallback: () => void;
+  appversion?: string;
+  appplatform?: string;
 }
 
 /**
@@ -23,6 +26,8 @@ interface SaleorLinksConfig {
 export const createSaleorLinks = ({
   apiUrl,
   tokenExpirationCallback,
+  appplatform,
+  appversion
 }: SaleorLinksConfig) => {
   const invalidTokenLink = invalidTokenLinkWithTokenHandler(
     tokenExpirationCallback
@@ -37,9 +42,21 @@ export const createSaleorLinks = ({
     new BatchHttpLink({ credentials: "include", uri: apiUrl })
   );
 
+  const appVersionAndPlatformLink = setContext(async (_, context) => {
+    return {
+      ...context,
+      headers: {
+        ...context.headers,
+        appVersion: appversion,
+        appPlatform: appplatform
+      }
+    }
+  });
+
   return [
     invalidTokenLink,
     authLink,
+    appVersionAndPlatformLink,
     new RetryLink(),
     batchAndUploadLink
   ];

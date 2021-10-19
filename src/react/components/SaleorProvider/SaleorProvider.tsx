@@ -11,6 +11,8 @@ const SaleorProvider: React.FC<IProps> = ({
   apolloConfig,
   config,
   children,
+  appversion,
+  appplatform
 }: IProps) => {
   const [context, setContext] = useState<SaleorAPI | null>(null);
   const [client, setClient] = useState<ApolloClient<any> | null>(null);
@@ -27,7 +29,7 @@ const SaleorProvider: React.FC<IProps> = ({
   };
 
   useEffect(() => {
-    const manager = new SaleorManager(config, apolloConfig);
+    const manager = new SaleorManager(config, apolloConfig, appversion, appplatform);
 
     getSaleorApiAndClient(manager);
   }, []);

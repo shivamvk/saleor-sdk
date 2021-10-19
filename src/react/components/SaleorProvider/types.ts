@@ -10,4 +10,6 @@ export interface IProps {
    * Custom Apollo client configuration.
    */
   apolloConfig?: ApolloConfigInput;
+  appversion?: string;
+  appplatform?: string;
 }

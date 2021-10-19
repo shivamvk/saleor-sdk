@@ -39,8 +39,13 @@ export class SaleorManager {
 
   private apiChangeListener?: (api?: SaleorAPI) => any;
 
-  constructor(config: ConfigInput, apolloConfig?: ApolloConfigInput) {
+  private appversion?: string;
+  private appplatform?: string;
+
+  constructor(config: ConfigInput, apolloConfig?: ApolloConfigInput, appversion?: string, appplatform?: string) {
     this.config = config;
+    this.appversion = appversion;
+    this.appplatform = appplatform;
     this.apolloConfig = {
       persistCache: true,
       ...apolloConfig,
@@ -59,7 +64,9 @@ export class SaleorManager {
         this.config,
         this.apolloConfig,
         this.tokenExpirationCallback,
-        this.onSaleorApiChange
+        this.onSaleorApiChange,
+        this.appplatform,
+        this.appversion
       );
 
       this.api = api;
@@ -78,7 +85,9 @@ export class SaleorManager {
     config: ConfigInput,
     apolloConfig: ApolloConfigInput,
     tokenExpirationCallback: () => void,
-    onSaleorApiChange: () => void
+    onSaleorApiChange: () => void,
+    appplatform?: string,
+    appversion?: string
   ): Promise<CreateAPIResult> => {
     const { cache, persistCache, links, client, options } = apolloConfig;
 
@@ -94,6 +103,8 @@ export class SaleorManager {
         : createSaleorLinks({
             apiUrl: config.apiUrl,
             tokenExpirationCallback,
+            appplatform,
+            appversion
           });
     const apolloClient =
       client || createSaleorClient(saleorCache, saleorLinks, options);
