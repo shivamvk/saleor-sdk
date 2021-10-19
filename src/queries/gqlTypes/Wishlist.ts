@@ -19,6 +19,11 @@ export interface Wishlist_wishlist_items_edges_node_product_metadata {
   value: string;
 }
 
+export interface Wishlist_wishlist_items_edges_node_product_productType {
+  __typename: "ProductType";
+  name: string;
+}
+
 export interface Wishlist_wishlist_items_edges_node_product_thumbnail {
   __typename: "Image";
   /**
@@ -38,6 +43,18 @@ export interface Wishlist_wishlist_items_edges_node_product_images {
    */
   url: string;
   alt: string;
+}
+
+export interface Wishlist_wishlist_items_edges_node_product_variants_metadata {
+  __typename: "MetadataItem";
+  /**
+   * Key of a metadata item.
+   */
+  key: string;
+  /**
+   * Value of a metadata item.
+   */
+  value: string;
 }
 
 export interface Wishlist_wishlist_items_edges_node_product_variants_images {
@@ -141,11 +158,6 @@ export interface Wishlist_wishlist_items_edges_node_product_variants_pricing {
   price: Wishlist_wishlist_items_edges_node_product_variants_pricing_price | null;
 }
 
-export interface Wishlist_wishlist_items_edges_node_product_variants_metadata {
-  key: string;
-  value: string;
-}
-
 export interface Wishlist_wishlist_items_edges_node_product_variants {
   __typename: "ProductVariant";
   /**
@@ -154,7 +166,10 @@ export interface Wishlist_wishlist_items_edges_node_product_variants {
   id: string;
   sku: string;
   name: string;
-  metadata: Wishlist_wishlist_items_edges_node_product_variants_metadata[]; 
+  /**
+   * List of public metadata items. Can be accessed without permissions.
+   */
+  metadata: (Wishlist_wishlist_items_edges_node_product_variants_metadata | null)[];
   /**
    * Quantity of a product available for sale in one checkout.
    */
@@ -349,10 +364,6 @@ export interface Wishlist_wishlist_items_edges_node_product_pricing {
   priceRange: Wishlist_wishlist_items_edges_node_product_pricing_priceRange | null;
 }
 
-export interface Wishlist_wishlist_items_edges_node_product_product_type{
-  name: string;
-}
-
 export interface Wishlist_wishlist_items_edges_node_product {
   __typename: "Product";
   /**
@@ -361,7 +372,6 @@ export interface Wishlist_wishlist_items_edges_node_product {
   id: string;
   name: string;
   slug: string;
-  productType: Wishlist_wishlist_items_edges_node_product_product_type; 
   /**
    * Whether the product is available for purchase.
    */
@@ -370,6 +380,7 @@ export interface Wishlist_wishlist_items_edges_node_product {
    * List of public metadata items. Can be accessed without permissions.
    */
   metadata: (Wishlist_wishlist_items_edges_node_product_metadata | null)[];
+  productType: Wishlist_wishlist_items_edges_node_product_productType;
   /**
    * The main thumbnail for a product.
    */

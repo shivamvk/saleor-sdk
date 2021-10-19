@@ -91,13 +91,32 @@ import {
   VerifySignInTokenInput,
   RefreshSignInTokenInput,
 } from "./types";
-import { OTPAuthentication, OTPAuthenticationVariables } from "../../mutations/gqlTypes/OTPAuthentication";
+import {
+  OTPAuthentication,
+  OTPAuthenticationVariables,
+} from "../../mutations/gqlTypes/OTPAuthentication";
 import { Wishlist, WishlistVariables } from "../../queries/gqlTypes/Wishlist";
 import { getWishlist } from "../../queries/wishlist";
-import { wishlistAddProduct, wishlistAddProductVariables } from "../../mutations/gqlTypes/wishlistAddProduct";
-import { wishlistRemoveProduct, wishlistRemoveProductVariables } from "../../mutations/gqlTypes/wishlistRemoveProduct";
-import { UpdateCheckoutAddressType, UpdateCheckoutAddressTypeVariables } from "src/mutations/gqlTypes/UpdateCheckoutAddressType";
-import { ConfirmAccountV2, ConfirmAccountV2Variables } from "src/mutations/gqlTypes/CreateAccountV2";
+import {
+  wishlistAddProduct,
+  wishlistAddProductVariables,
+} from "../../mutations/gqlTypes/wishlistAddProduct";
+import {
+  wishlistRemoveProduct,
+  wishlistRemoveProductVariables,
+} from "../../mutations/gqlTypes/wishlistRemoveProduct";
+import {
+  UpdateCheckoutAddressType,
+  UpdateCheckoutAddressTypeVariables,
+} from "src/mutations/gqlTypes/UpdateCheckoutAddressType";
+import {
+  ConfirmAccountV2,
+  ConfirmAccountV2Variables,
+} from "src/mutations/gqlTypes/CreateAccountV2";
+import {
+  AccountRegisterV2,
+  AccountRegisterV2Variables,
+} from "../../mutations/gqlTypes/AccountRegisterV2";
 
 export class ApolloClientManager {
   private client: ApolloClient<any>;
@@ -128,7 +147,7 @@ export class ApolloClientManager {
       variables: {
         first,
       },
-      fetchPolicy: 'network-only'
+      fetchPolicy: "network-only",
     });
 
     if (errors?.length) {
@@ -364,6 +383,46 @@ export class ApolloClientManager {
     };
   };
 
+  registerAccountV2 = async (
+    email: string,
+    phone: string
+    // password?: string
+  ) => {
+    // const input = password ? { email, password, phone } : { email, phone };
+    const { data, errors } = await this.client.mutate<
+      AccountRegisterV2,
+      AccountRegisterV2Variables
+    >({
+      fetchPolicy: "no-cache",
+      mutation: AuthMutations.REGISTER_ACCOUNT,
+      variables: {
+        input: {
+          email,
+          phone,
+        },
+      },
+    });
+
+    if (errors?.length) {
+      return {
+        error: errors,
+      };
+    }
+    if (data?.accountRegisterV2?.errors.length) {
+      return {
+        error: data.accountRegisterV2.errors,
+      };
+    }
+    if (data?.accountRegisterV2?.accountErrors.length) {
+      return {
+        error: data.accountRegisterV2.accountErrors,
+      };
+    }
+    return {
+      data: data?.accountRegisterV2?.user,
+    };
+  };
+
   signOut = async () => {
     await this.client.resetStore();
   };
@@ -541,56 +600,56 @@ export class ApolloClientManager {
 
     const linesWithMissingVariantUpdated = variants
       ? variants.edges.map(edge => {
-        const existingLine = checkoutlines?.find(
-          line => line.variant.id === edge.node.id
-        );
-        const variantPricing = edge.node.pricing?.price;
-        const totalPrice = variantPricing
-          ? {
-            gross: {
-              ...variantPricing.gross,
-              amount:
-                variantPricing.gross.amount * (existingLine?.quantity || 0),
-            },
-            net: {
-              ...variantPricing.net,
-              amount:
-                variantPricing.net.amount * (existingLine?.quantity || 0),
-            },
-          }
-          : null;
+          const existingLine = checkoutlines?.find(
+            line => line.variant.id === edge.node.id
+          );
+          const variantPricing = edge.node.pricing?.price;
+          const totalPrice = variantPricing
+            ? {
+                gross: {
+                  ...variantPricing.gross,
+                  amount:
+                    variantPricing.gross.amount * (existingLine?.quantity || 0),
+                },
+                net: {
+                  ...variantPricing.net,
+                  amount:
+                    variantPricing.net.amount * (existingLine?.quantity || 0),
+                },
+              }
+            : null;
 
-        return {
-          id: existingLine?.variant?.id,
-          quantity: existingLine?.quantity || 0,
-          totalPrice,
-          variant: {
-            attributes: edge.node.attributes,
-            id: edge.node.id,
-            isAvailable: edge.node.isAvailable,
-            name: edge.node.name,
-            pricing: edge.node.pricing,
-            product: edge.node.product,
-            quantityAvailable: edge.node.quantityAvailable,
-            sku: edge.node.sku,
-          },
-        };
-      })
+          return {
+            id: existingLine?.variant?.id,
+            quantity: existingLine?.quantity || 0,
+            totalPrice,
+            variant: {
+              attributes: edge.node.attributes,
+              id: edge.node.id,
+              isAvailable: edge.node.isAvailable,
+              name: edge.node.name,
+              pricing: edge.node.pricing,
+              product: edge.node.product,
+              quantityAvailable: edge.node.quantityAvailable,
+              sku: edge.node.sku,
+            },
+          };
+        })
       : [];
 
     const linesWithProperVariantUpdated = linesWithProperVariant.map(line => {
       const variantPricing = line.variant.pricing?.price;
       const totalPrice = variantPricing
         ? {
-          gross: {
-            ...variantPricing.gross,
-            amount: variantPricing.gross.amount * line.quantity,
-          },
-          net: {
-            ...variantPricing.net,
-            amount: variantPricing.net.amount * line.quantity,
-          },
-        }
+            gross: {
+              ...variantPricing.gross,
+              amount: variantPricing.gross.amount * line.quantity,
+            },
+            net: {
+              ...variantPricing.net,
+              amount: variantPricing.net.amount * line.quantity,
+            },
+          }
         : null;
 
       return {
@@ -623,7 +682,7 @@ export class ApolloClientManager {
             companyName: billingAddress.companyName,
             country:
               CountryCode[
-              billingAddress?.country?.code as keyof typeof CountryCode
+                billingAddress?.country?.code as keyof typeof CountryCode
               ],
             countryArea: billingAddress.countryArea,
             firstName: billingAddress.firstName,
@@ -640,7 +699,7 @@ export class ApolloClientManager {
             companyName: shippingAddress.companyName,
             country:
               CountryCode[
-              shippingAddress?.country?.code as keyof typeof CountryCode
+                shippingAddress?.country?.code as keyof typeof CountryCode
               ],
             countryArea: shippingAddress.countryArea,
             firstName: shippingAddress.firstName,
@@ -745,7 +804,7 @@ export class ApolloClientManager {
           companyName: shippingAddress.companyName,
           country:
             CountryCode[
-            shippingAddress?.country?.code as keyof typeof CountryCode
+              shippingAddress?.country?.code as keyof typeof CountryCode
             ],
           countryArea: shippingAddress.countryArea,
           firstName: shippingAddress.firstName,
@@ -834,7 +893,7 @@ export class ApolloClientManager {
           companyName: billingAddress.companyName,
           country:
             CountryCode[
-            billingAddress?.country?.code as keyof typeof CountryCode
+              billingAddress?.country?.code as keyof typeof CountryCode
             ],
           countryArea: billingAddress.countryArea,
           firstName: billingAddress.firstName,
@@ -891,7 +950,7 @@ export class ApolloClientManager {
           companyName: billingAddress.companyName,
           country:
             CountryCode[
-            billingAddress?.country?.code as keyof typeof CountryCode
+              billingAddress?.country?.code as keyof typeof CountryCode
             ],
           countryArea: billingAddress.countryArea,
           firstName: billingAddress.firstName,
@@ -1067,7 +1126,7 @@ export class ApolloClientManager {
             companyName: billingAddress.companyName,
             country:
               CountryCode[
-              billingAddress?.country?.code as keyof typeof CountryCode
+                billingAddress?.country?.code as keyof typeof CountryCode
               ],
             countryArea: billingAddress.countryArea,
             firstName: billingAddress.firstName,
@@ -1198,7 +1257,7 @@ export class ApolloClientManager {
             quantityAvailable: itemVariant?.quantityAvailable,
             sku: itemVariant?.sku,
             // @ts-ignore
-            images: itemVariant?.images
+            images: itemVariant?.images,
           },
         };
       }),

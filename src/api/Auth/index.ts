@@ -309,6 +309,70 @@ export class AuthAPI extends ErrorListener {
     };
   };
 
+  registerAccountV2 = async (
+    email: string,
+    phone: string
+    // password?: string
+    // autoSignIn: boolean
+  ): PromiseRunResponse<DataErrorAuthTypes> => {
+    const { data, dataError } = await this.jobsManager.run(
+      "auth",
+      "registerAccountV2",
+      {
+        email,
+        // password,
+        phone,
+      }
+    );
+
+    return {
+      data,
+      dataError,
+    };
+  };
+
+  confirmAccountV2 = async (
+    otp: string,
+    phone: string
+    // autoSignIn: boolean
+  ): PromiseRunResponse<DataErrorAuthTypes> => {
+    const { data, dataError } = await this.jobsManager.run(
+      "auth",
+      "confirmAccountV2",
+      {
+        otp,
+        phone,
+      }
+    );
+
+    if (dataError) {
+      return {
+        data,
+        dataError,
+        pending: false,
+      };
+    }
+
+    const {
+      data: userData,
+      dataError: userDataError,
+    } = await this.jobsManager.run("auth", "provideUser", undefined);
+    if (this.config.loadOnStart.checkout) {
+      await this.jobsManager.run("checkout", "provideCheckout", {
+        isUserSignedIn: !!data?.user,
+      });
+    }
+    // if (this.config.loadOnStart.wishlist) {
+    //   await this.jobsManager.run("wishlist", "getWishlist", undefined);
+    // }
+
+    return {
+      data: userData,
+      dataError: userDataError,
+      pending: false,
+    };
+  };
+
   /**
    * Sign out user by clearing cache, local storage and authentication token.
    */
@@ -347,15 +411,14 @@ export class AuthAPI extends ErrorListener {
     };
   };
 
-  private autoSignIn = async () => { };
+  private autoSignIn = async () => {};
 
   setUserAvatar = (url: string) => {
     if (this.user) {
       this.user.avatar = {
-        url
+        url,
       };
       this.saleorState.loadUser();
     }
-  }
-
+  };
 }

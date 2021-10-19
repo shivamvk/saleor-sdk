@@ -279,6 +279,14 @@ export interface CreateCheckoutPayment_checkoutPaymentCreate_checkout_lines_tota
   net: CreateCheckoutPayment_checkoutPaymentCreate_checkout_lines_totalPrice_net;
 }
 
+export interface CreateCheckoutPayment_checkoutPaymentCreate_checkout_lines_variant_images {
+  __typename: "ProductImage";
+  /**
+   * The URL of the image.
+   */
+  url: string;
+}
+
 export interface CreateCheckoutPayment_checkoutPaymentCreate_checkout_lines_variant_pricing_priceUndiscounted_gross {
   __typename: "Money";
   /**
@@ -443,6 +451,7 @@ export interface CreateCheckoutPayment_checkoutPaymentCreate_checkout_lines_vari
    */
   id: string;
   name: string;
+  slug: string;
   /**
    * The main thumbnail for a product.
    */
@@ -470,6 +479,10 @@ export interface CreateCheckoutPayment_checkoutPaymentCreate_checkout_lines_vari
    * Whether the variant is in stock and visible or not.
    */
   isAvailable: boolean | null;
+  /**
+   * List of images for the product variant.
+   */
+  images: (CreateCheckoutPayment_checkoutPaymentCreate_checkout_lines_variant_images | null)[] | null;
   /**
    * Lists the storefront variant's pricing, the current price and discounts, only meant for displaying.
    */
@@ -651,8 +664,7 @@ export interface CreateCheckoutPayment_checkoutPaymentCreate_errors {
    */
   code: PaymentErrorCode;
   /**
-   * Name of a field that caused the error. A value of `null` indicates that the
-   * error isn't associated with a particular field.
+   * Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
    */
   field: string | null;
   /**
@@ -676,7 +688,7 @@ export interface CreateCheckoutPayment_checkoutPaymentCreate {
 
 export interface CreateCheckoutPayment {
   /**
-   * Create a new payment for given checkout.
+   * (Custom Implementation) Create a new payment via selected gateway for given checkout.
    */
   checkoutPaymentCreate: CreateCheckoutPayment_checkoutPaymentCreate | null;
 }

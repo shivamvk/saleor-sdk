@@ -277,6 +277,14 @@ export interface CheckoutDetails_checkout_lines_totalPrice {
   net: CheckoutDetails_checkout_lines_totalPrice_net;
 }
 
+export interface CheckoutDetails_checkout_lines_variant_images {
+  __typename: "ProductImage";
+  /**
+   * The URL of the image.
+   */
+  url: string;
+}
+
 export interface CheckoutDetails_checkout_lines_variant_pricing_priceUndiscounted_gross {
   __typename: "Money";
   /**
@@ -441,6 +449,7 @@ export interface CheckoutDetails_checkout_lines_variant_product {
    */
   id: string;
   name: string;
+  slug: string;
   /**
    * The main thumbnail for a product.
    */
@@ -468,6 +477,10 @@ export interface CheckoutDetails_checkout_lines_variant {
    * Whether the variant is in stock and visible or not.
    */
   isAvailable: boolean | null;
+  /**
+   * List of images for the product variant.
+   */
+  images: (CheckoutDetails_checkout_lines_variant_images | null)[] | null;
   /**
    * Lists the storefront variant's pricing, the current price and discounts, only meant for displaying.
    */

@@ -3,29 +3,13 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AccountErrorCode } from "./../../gqlTypes/globalTypes";
+import { AccountRegisterInputV2 } from "./../../gqlTypes/globalTypes";
 
 // ====================================================
-// GraphQL mutation operation: DeleteUserAddress
+// GraphQL mutation operation: AccountRegisterV2
 // ====================================================
 
-export interface DeleteUserAddress_accountAddressDelete_errors {
-  __typename: "AccountError";
-  /**
-   * The error code.
-   */
-  code: AccountErrorCode;
-  /**
-   * Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
-   */
-  field: string | null;
-  /**
-   * The error message.
-   */
-  message: string | null;
-}
-
-export interface DeleteUserAddress_accountAddressDelete_user_avatar {
+export interface AccountRegisterV2_accountRegisterV2_user_avatar {
   __typename: "Image";
   /**
    * The URL of the image.
@@ -33,7 +17,7 @@ export interface DeleteUserAddress_accountAddressDelete_user_avatar {
   url: string;
 }
 
-export interface DeleteUserAddress_accountAddressDelete_user_metadata {
+export interface AccountRegisterV2_accountRegisterV2_user_metadata {
   __typename: "MetadataItem";
   /**
    * Key of a metadata item.
@@ -45,7 +29,7 @@ export interface DeleteUserAddress_accountAddressDelete_user_metadata {
   value: string;
 }
 
-export interface DeleteUserAddress_accountAddressDelete_user_defaultShippingAddress_country {
+export interface AccountRegisterV2_accountRegisterV2_user_defaultShippingAddress_country {
   __typename: "CountryDisplay";
   /**
    * Country code.
@@ -57,7 +41,7 @@ export interface DeleteUserAddress_accountAddressDelete_user_defaultShippingAddr
   country: string;
 }
 
-export interface DeleteUserAddress_accountAddressDelete_user_defaultShippingAddress {
+export interface AccountRegisterV2_accountRegisterV2_user_defaultShippingAddress {
   __typename: "Address";
   /**
    * The ID of the object.
@@ -73,7 +57,7 @@ export interface DeleteUserAddress_accountAddressDelete_user_defaultShippingAddr
   /**
    * Shop's default country.
    */
-  country: DeleteUserAddress_accountAddressDelete_user_defaultShippingAddress_country;
+  country: AccountRegisterV2_accountRegisterV2_user_defaultShippingAddress_country;
   countryArea: string;
   phone: string | null;
   /**
@@ -86,7 +70,7 @@ export interface DeleteUserAddress_accountAddressDelete_user_defaultShippingAddr
   isDefaultShippingAddress: boolean | null;
 }
 
-export interface DeleteUserAddress_accountAddressDelete_user_defaultBillingAddress_country {
+export interface AccountRegisterV2_accountRegisterV2_user_defaultBillingAddress_country {
   __typename: "CountryDisplay";
   /**
    * Country code.
@@ -98,7 +82,7 @@ export interface DeleteUserAddress_accountAddressDelete_user_defaultBillingAddre
   country: string;
 }
 
-export interface DeleteUserAddress_accountAddressDelete_user_defaultBillingAddress {
+export interface AccountRegisterV2_accountRegisterV2_user_defaultBillingAddress {
   __typename: "Address";
   /**
    * The ID of the object.
@@ -114,7 +98,7 @@ export interface DeleteUserAddress_accountAddressDelete_user_defaultBillingAddre
   /**
    * Shop's default country.
    */
-  country: DeleteUserAddress_accountAddressDelete_user_defaultBillingAddress_country;
+  country: AccountRegisterV2_accountRegisterV2_user_defaultBillingAddress_country;
   countryArea: string;
   phone: string | null;
   /**
@@ -127,7 +111,7 @@ export interface DeleteUserAddress_accountAddressDelete_user_defaultBillingAddre
   isDefaultShippingAddress: boolean | null;
 }
 
-export interface DeleteUserAddress_accountAddressDelete_user_addresses_country {
+export interface AccountRegisterV2_accountRegisterV2_user_addresses_country {
   __typename: "CountryDisplay";
   /**
    * Country code.
@@ -139,7 +123,7 @@ export interface DeleteUserAddress_accountAddressDelete_user_addresses_country {
   country: string;
 }
 
-export interface DeleteUserAddress_accountAddressDelete_user_addresses {
+export interface AccountRegisterV2_accountRegisterV2_user_addresses {
   __typename: "Address";
   /**
    * The ID of the object.
@@ -155,7 +139,7 @@ export interface DeleteUserAddress_accountAddressDelete_user_addresses {
   /**
    * Shop's default country.
    */
-  country: DeleteUserAddress_accountAddressDelete_user_addresses_country;
+  country: AccountRegisterV2_accountRegisterV2_user_addresses_country;
   countryArea: string;
   phone: string | null;
   /**
@@ -168,7 +152,7 @@ export interface DeleteUserAddress_accountAddressDelete_user_addresses {
   isDefaultShippingAddress: boolean | null;
 }
 
-export interface DeleteUserAddress_accountAddressDelete_user {
+export interface AccountRegisterV2_accountRegisterV2_user {
   __typename: "User";
   /**
    * The ID of the object.
@@ -178,35 +162,60 @@ export interface DeleteUserAddress_accountAddressDelete_user {
   firstName: string;
   lastName: string;
   isStaff: boolean;
-  avatar: DeleteUserAddress_accountAddressDelete_user_avatar | null;
+  avatar: AccountRegisterV2_accountRegisterV2_user_avatar | null;
   /**
    * List of public metadata items. Can be accessed without permissions.
    */
-  metadata: (DeleteUserAddress_accountAddressDelete_user_metadata | null)[];
-  defaultShippingAddress: DeleteUserAddress_accountAddressDelete_user_defaultShippingAddress | null;
-  defaultBillingAddress: DeleteUserAddress_accountAddressDelete_user_defaultBillingAddress | null;
+  metadata: (AccountRegisterV2_accountRegisterV2_user_metadata | null)[];
+  defaultShippingAddress: AccountRegisterV2_accountRegisterV2_user_defaultShippingAddress | null;
+  defaultBillingAddress: AccountRegisterV2_accountRegisterV2_user_defaultBillingAddress | null;
   /**
    * List of all user's addresses.
    */
-  addresses: (DeleteUserAddress_accountAddressDelete_user_addresses | null)[] | null;
+  addresses: (AccountRegisterV2_accountRegisterV2_user_addresses | null)[] | null;
 }
 
-export interface DeleteUserAddress_accountAddressDelete {
-  __typename: "AccountAddressDelete";
-  errors: DeleteUserAddress_accountAddressDelete_errors[];
+export interface AccountRegisterV2_accountRegisterV2_accountErrors {
+  __typename: "AccountError";
   /**
-   * A user instance for which the address was deleted.
+   * Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
    */
-  user: DeleteUserAddress_accountAddressDelete_user | null;
-}
-
-export interface DeleteUserAddress {
+  field: string | null;
   /**
-   * Delete an address of the logged-in user.
+   * The error message.
    */
-  accountAddressDelete: DeleteUserAddress_accountAddressDelete | null;
+  message: string | null;
 }
 
-export interface DeleteUserAddressVariables {
-  addressId: string;
+export interface AccountRegisterV2_accountRegisterV2_errors {
+  __typename: "Error";
+  /**
+   * Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+   */
+  field: string | null;
+  /**
+   * The error message.
+   */
+  message: string | null;
+}
+
+export interface AccountRegisterV2_accountRegisterV2 {
+  __typename: "AccountRegisterV2";
+  user: AccountRegisterV2_accountRegisterV2_user | null;
+  accountErrors: AccountRegisterV2_accountRegisterV2_accountErrors[];
+  /**
+   * List of errors that occurred executing the mutation.
+   */
+  errors: AccountRegisterV2_accountRegisterV2_errors[];
+}
+
+export interface AccountRegisterV2 {
+  /**
+   * Register a new user with phone and email.
+   */
+  accountRegisterV2: AccountRegisterV2_accountRegisterV2 | null;
+}
+
+export interface AccountRegisterV2Variables {
+  input: AccountRegisterInputV2;
 }

@@ -80,6 +80,25 @@ export const createOTPTokeMutation = gql`
   }
 `;
 
+export const REGISTER_ACCOUNT = gql`
+  ${userFragment}
+  mutation AccountRegisterV2($input: AccountRegisterInputV2!) {
+    accountRegisterV2(input: $input) {
+      user {
+        ...User
+      }
+      accountErrors {
+        field
+        message
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
 export const CONFIRM_ACCOUNT = gql`
   ${userFragment}
   mutation ConfirmAccountV2($otp: String!, $phone: String!) {
