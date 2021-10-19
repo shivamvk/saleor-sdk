@@ -420,6 +420,8 @@ export class ApolloClientManager {
     }
     return {
       data: data?.accountRegisterV2?.user,
+      isActiveUser: data?.accountRegisterV2?.isActiveUser,
+      isNewUser: data?.accountRegisterV2?.isNewUser,
     };
   };
 

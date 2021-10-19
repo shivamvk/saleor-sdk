@@ -84,6 +84,8 @@ export const REGISTER_ACCOUNT = gql`
   ${userFragment}
   mutation AccountRegisterV2($input: AccountRegisterInputV2!) {
     accountRegisterV2(input: $input) {
+      isNewUser
+      isActiveUser
       user {
         ...User
       }

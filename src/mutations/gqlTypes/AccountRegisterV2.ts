@@ -201,6 +201,14 @@ export interface AccountRegisterV2_accountRegisterV2_errors {
 
 export interface AccountRegisterV2_accountRegisterV2 {
   __typename: "AccountRegisterV2";
+  /**
+   * Informs whether users is new.
+   */
+  isNewUser: boolean | null;
+  /**
+   * Informs whether users is active.
+   */
+  isActiveUser: boolean | null;
   user: AccountRegisterV2_accountRegisterV2_user | null;
   accountErrors: AccountRegisterV2_accountRegisterV2_accountErrors[];
   /**
