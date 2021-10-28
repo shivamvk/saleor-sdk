@@ -208,8 +208,8 @@ export class SaleorCartAPI extends ErrorListener {
         timestamp: Date.now(),
       };
       await AsyncStorage.setItem('data_checkout', JSON.stringify(wrappedItem));
-      // this.jobsManager.addToQueue("cart", "setCartItem");
       if (error) {
+        this.localStorageManager.updateItemInCart(variantId, quantity - 1);
         return { error };
       } else if (data) {
         return { data, quantity };
