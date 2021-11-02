@@ -210,6 +210,22 @@ export class SaleorCartAPI extends ErrorListener {
       await AsyncStorage.setItem('data_checkout', JSON.stringify(wrappedItem));
       if (error) {
         this.localStorageManager.updateItemInCart(variantId, quantity - 1);
+        if (this.saleorState.checkout.lines) {
+          const {
+            data,
+            error,
+          } = await this.apolloClientManager.getRefreshedCheckoutLines(
+            this.saleorState.checkout?.lines
+          );
+          if (error) {
+            this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
+          } else {
+            await this.localStorageManager.getHandler().setCheckout({
+              ...(this.saleorState.checkout?._W ? this.saleorState.checkout?._W : this.saleorState.checkout),
+              lines: data,
+            });
+          }
+        }
         return { error };
       } else if (data) {
         return { data, quantity };
