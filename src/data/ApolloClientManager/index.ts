@@ -1171,6 +1171,7 @@ export class ApolloClientManager {
     availablePaymentGateways,
     availableShippingMethods,
     shippingMethod,
+    note
   }: Checkout): ICheckoutModel => ({
     availablePaymentGateways,
     availableShippingMethods: availableShippingMethods
@@ -1178,6 +1179,7 @@ export class ApolloClientManager {
       : [],
     billingAddress,
     email,
+    note,
     id,
     lines: lines
       ?.filter(item => item?.quantity && item.variant.id)

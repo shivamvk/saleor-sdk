@@ -133,6 +133,7 @@ export const checkoutFragment = gql`
       ...Address
     }
     email
+    note
     availableShippingMethods {
       ...ShippingMethod
     }

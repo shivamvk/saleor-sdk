@@ -563,6 +563,7 @@ export interface UpdateCheckoutLine_checkoutLinesUpdate_checkout {
    * Email of a customer.
    */
   email: string;
+  note: string;
   /**
    * Shipping methods that can be used with this order.
    */
