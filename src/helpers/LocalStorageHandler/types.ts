@@ -1,4 +1,4 @@
-import { Wishlist_wishlist_items_edges_node_product } from "src/queries/gqlTypes/Wishlist";
+import { Wishlist_wishlist_items_edges_node_product } from "../../queries/gqlTypes/Wishlist";
 import {
   Checkout_availableShippingMethods,
   Checkout_lines_variant_attributes,
@@ -16,7 +16,7 @@ export enum LocalStorageItems {
   REFRESH_TOKEN = "refresh_token",
   CHECKOUT = "data_checkout",
   PAYMENT = "data_payment",
-  WISHLIST = "data_wishlist"
+  WISHLIST = "data_wishlist",
 }
 export enum LocalStorageEvents {
   CLEAR = "clear",
@@ -120,6 +120,7 @@ export interface ICheckoutModel {
   selectedShippingAddressId?: string;
   selectedBillingAddressId?: string;
   billingAsShipping?: boolean;
+  note?: string;
   promoCodeDiscount?: ICheckoutModelPromoCodeDiscount;
   lines?: ICheckoutModelLine[] | null;
   availableShippingMethods?: Checkout_availableShippingMethods[];

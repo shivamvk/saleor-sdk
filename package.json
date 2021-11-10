@@ -106,6 +106,9 @@
     "react": "17.0.1",
     "react-native": "0.64.0"
   },
+  "resolutions": {
+    "grapahl": "^15.5.0"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",

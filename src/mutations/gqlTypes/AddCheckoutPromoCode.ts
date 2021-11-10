@@ -3,8 +3,6 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CheckoutErrorCode } from "./../../gqlTypes/globalTypes";
-
 // ====================================================
 // GraphQL mutation operation: AddCheckoutPromoCode
 // ====================================================
@@ -279,6 +277,14 @@ export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout_lines_totalP
   net: AddCheckoutPromoCode_checkoutAddPromoCode_checkout_lines_totalPrice_net;
 }
 
+export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout_lines_variant_images {
+  __typename: "ProductImage";
+  /**
+   * The URL of the image.
+   */
+  url: string;
+}
+
 export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout_lines_variant_pricing_priceUndiscounted_gross {
   __typename: "Money";
   /**
@@ -443,6 +449,7 @@ export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout_lines_varian
    */
   id: string;
   name: string;
+  slug: string;
   /**
    * The main thumbnail for a product.
    */
@@ -470,6 +477,10 @@ export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout_lines_varian
    * Whether the variant is in stock and visible or not.
    */
   isAvailable: boolean | null;
+  /**
+   * List of images for the product variant.
+   */
+  images: (AddCheckoutPromoCode_checkoutAddPromoCode_checkout_lines_variant_images | null)[] | null;
   /**
    * Lists the storefront variant's pricing, the current price and discounts, only meant for displaying.
    */
@@ -563,6 +574,7 @@ export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout {
    * Email of a customer.
    */
   email: string;
+  note: string;
   /**
    * Shipping methods that can be used with this order.
    */
@@ -591,14 +603,9 @@ export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout {
 }
 
 export interface AddCheckoutPromoCode_checkoutAddPromoCode_errors {
-  __typename: "CheckoutError";
+  __typename: "Error";
   /**
-   * The error code.
-   */
-  code: CheckoutErrorCode;
-  /**
-   * Name of a field that caused the error. A value of `null` indicates that the
-   * error isn't associated with a particular field.
+   * Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
    */
   field: string | null;
   /**
@@ -608,17 +615,20 @@ export interface AddCheckoutPromoCode_checkoutAddPromoCode_errors {
 }
 
 export interface AddCheckoutPromoCode_checkoutAddPromoCode {
-  __typename: "CheckoutAddPromoCode";
+  __typename: "checkoutAddPromoCodeShopify";
   /**
    * The checkout with the added gift card or voucher.
    */
   checkout: AddCheckoutPromoCode_checkoutAddPromoCode_checkout | null;
+  /**
+   * List of errors that occurred executing the mutation.
+   */
   errors: AddCheckoutPromoCode_checkoutAddPromoCode_errors[];
 }
 
 export interface AddCheckoutPromoCode {
   /**
-   * Adds a gift card or a voucher to a checkout.
+   * Create ShopifyUser.
    */
   checkoutAddPromoCode: AddCheckoutPromoCode_checkoutAddPromoCode | null;
 }

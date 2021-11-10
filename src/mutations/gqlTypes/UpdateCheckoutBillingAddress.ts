@@ -16,8 +16,7 @@ export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_error
    */
   code: CheckoutErrorCode;
   /**
-   * Name of a field that caused the error. A value of `null` indicates that the
-   * error isn't associated with a particular field.
+   * Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
    */
   field: string | null;
   /**
@@ -296,6 +295,14 @@ export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_check
   net: UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_checkout_lines_totalPrice_net;
 }
 
+export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_checkout_lines_variant_images {
+  __typename: "ProductImage";
+  /**
+   * The URL of the image.
+   */
+  url: string;
+}
+
 export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_checkout_lines_variant_pricing_priceUndiscounted_gross {
   __typename: "Money";
   /**
@@ -460,6 +467,7 @@ export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_check
    */
   id: string;
   name: string;
+  slug: string;
   /**
    * The main thumbnail for a product.
    */
@@ -487,6 +495,10 @@ export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_check
    * Whether the variant is in stock and visible or not.
    */
   isAvailable: boolean | null;
+  /**
+   * List of images for the product variant.
+   */
+  images: (UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_checkout_lines_variant_images | null)[] | null;
   /**
    * Lists the storefront variant's pricing, the current price and discounts, only meant for displaying.
    */
@@ -580,6 +592,7 @@ export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_check
    * Email of a customer.
    */
   email: string;
+  note: string;
   /**
    * Shipping methods that can be used with this order.
    */

@@ -16,14 +16,25 @@ export interface CompleteCheckout_checkoutComplete_errors {
    */
   code: CheckoutErrorCode;
   /**
-   * Name of a field that caused the error. A value of `null` indicates that the
-   * error isn't associated with a particular field.
+   * Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
    */
   field: string | null;
   /**
    * The error message.
    */
   message: string | null;
+}
+
+export interface CompleteCheckout_checkoutComplete_order_metadata {
+  __typename: "MetadataItem";
+  /**
+   * Key of a metadata item.
+   */
+  key: string;
+  /**
+   * Value of a metadata item.
+   */
+  value: string;
 }
 
 export interface CompleteCheckout_checkoutComplete_order_shippingAddress_country {
@@ -65,6 +76,14 @@ export interface CompleteCheckout_checkoutComplete_order_shippingAddress {
    * Address is user's default shipping address.
    */
   isDefaultShippingAddress: boolean | null;
+}
+
+export interface CompleteCheckout_checkoutComplete_order_lines_variant_images {
+  __typename: "ProductImage";
+  /**
+   * The URL of the image.
+   */
+  url: string;
 }
 
 export interface CompleteCheckout_checkoutComplete_order_lines_variant_pricing_priceUndiscounted_gross {
@@ -231,6 +250,7 @@ export interface CompleteCheckout_checkoutComplete_order_lines_variant_product {
    */
   id: string;
   name: string;
+  slug: string;
   /**
    * The main thumbnail for a product.
    */
@@ -258,6 +278,10 @@ export interface CompleteCheckout_checkoutComplete_order_lines_variant {
    * Whether the variant is in stock and visible or not.
    */
   isAvailable: boolean | null;
+  /**
+   * List of images for the product variant.
+   */
+  images: (CompleteCheckout_checkoutComplete_order_lines_variant_images | null)[] | null;
   /**
    * Lists the storefront variant's pricing, the current price and discounts, only meant for displaying.
    */
@@ -503,6 +527,10 @@ export interface CompleteCheckout_checkoutComplete_order {
    * User-friendly number of an order.
    */
   number: string | null;
+  /**
+   * List of public metadata items. Can be accessed without permissions.
+   */
+  metadata: (CompleteCheckout_checkoutComplete_order_metadata | null)[];
   shippingAddress: CompleteCheckout_checkoutComplete_order_shippingAddress | null;
   /**
    * List of order lines.
@@ -541,11 +569,7 @@ export interface CompleteCheckout_checkoutComplete {
 
 export interface CompleteCheckout {
   /**
-   * Completes the checkout. As a result a new order is created and a payment
-   * charge is made. This action requires a successful payment before it can be
-   * performed. In case additional confirmation step as 3D secure is required
-   * confirmationNeeded flag will be set to True and no order created until payment
-   * is confirmed with second call of this mutation.
+   * (Custom implementation) Completes the checkout. As a result a new order is created and a payment charge is made. This action requires a successful payment before it can be performed. In case additional confirmation step as 3D secure is required confirmationNeeded flag will be set to True and no order created until payment is confirmed with second call of this mutation.
    */
   checkoutComplete: CompleteCheckout_checkoutComplete | null;
 }

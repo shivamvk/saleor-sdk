@@ -7,7 +7,7 @@ module.exports = {
     ],
     service: {
       name: "saleor",
-      url: "http://localhost:8000/graphql/",
+      url: "https://boatfcapi.farziengineer.co/graphql/",
     },
   },
 };

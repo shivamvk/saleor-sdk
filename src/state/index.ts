@@ -1,5 +1,6 @@
 import { round } from "lodash";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ApolloClientManager } from "../data/ApolloClientManager";
 import { PaymentGateway } from "../fragments/gqlTypes/PaymentGateway";
 import { User } from "../fragments/gqlTypes/User";
@@ -17,7 +18,6 @@ import { Config } from "../types";
 import { ISaleorStateSummeryPrices, StateItems } from "./types";
 import { AuthJobsEvents } from "../jobs/Auth";
 import { BROWSER_NO_CREDENTIAL_API_MESSAGE } from "../api/Auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface SaleorStateLoaded {
   user: boolean;
@@ -45,6 +45,8 @@ export class SaleorState extends NamedObservable<StateItems> {
   signInTokenVerifying?: boolean;
 
   checkout?: ICheckoutModel;
+
+  wishlist?: IWishlistModel;
 
   promoCode?: string;
 
@@ -150,7 +152,7 @@ export class SaleorState extends NamedObservable<StateItems> {
     if (signInToken) {
       this.onSignInTokenVerifyingUpdate(true);
       await this.verityToken();
-    } else if(csrfToken){
+    } else if (csrfToken) {
       this.onSignInTokenRefreshUpdate(true);
       await this.refreshToken();
     }
@@ -192,11 +194,11 @@ export class SaleorState extends NamedObservable<StateItems> {
   };
 
   private refreshToken = async () => {
-    const { data, dataError } = await this.jobsManager.run(
+    const { dataError } = await this.jobsManager.run(
       "auth",
       "refreshSignInToken",
       { refreshToken: undefined }
-    )
+    );
     if (dataError) {
       await this.jobsManager.run("auth", "signOut", undefined);
       try {

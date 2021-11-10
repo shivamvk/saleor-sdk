@@ -9,6 +9,18 @@ import { PaymentChargeStatusEnum, OrderStatus } from "./../../gqlTypes/globalTyp
 // GraphQL query operation: OrderByToken
 // ====================================================
 
+export interface OrderByToken_orderByToken_metadata {
+  __typename: "MetadataItem";
+  /**
+   * Key of a metadata item.
+   */
+  key: string;
+  /**
+   * Value of a metadata item.
+   */
+  value: string;
+}
+
 export interface OrderByToken_orderByToken_shippingAddress_country {
   __typename: "CountryDisplay";
   /**
@@ -48,6 +60,14 @@ export interface OrderByToken_orderByToken_shippingAddress {
    * Address is user's default shipping address.
    */
   isDefaultShippingAddress: boolean | null;
+}
+
+export interface OrderByToken_orderByToken_lines_variant_images {
+  __typename: "ProductImage";
+  /**
+   * The URL of the image.
+   */
+  url: string;
 }
 
 export interface OrderByToken_orderByToken_lines_variant_pricing_priceUndiscounted_gross {
@@ -214,6 +234,7 @@ export interface OrderByToken_orderByToken_lines_variant_product {
    */
   id: string;
   name: string;
+  slug: string;
   /**
    * The main thumbnail for a product.
    */
@@ -241,6 +262,10 @@ export interface OrderByToken_orderByToken_lines_variant {
    * Whether the variant is in stock and visible or not.
    */
   isAvailable: boolean | null;
+  /**
+   * List of images for the product variant.
+   */
+  images: (OrderByToken_orderByToken_lines_variant_images | null)[] | null;
   /**
    * Lists the storefront variant's pricing, the current price and discounts, only meant for displaying.
    */
@@ -486,6 +511,10 @@ export interface OrderByToken_orderByToken {
    * User-friendly number of an order.
    */
   number: string | null;
+  /**
+   * List of public metadata items. Can be accessed without permissions.
+   */
+  metadata: (OrderByToken_orderByToken_metadata | null)[];
   shippingAddress: OrderByToken_orderByToken_shippingAddress | null;
   /**
    * List of order lines.

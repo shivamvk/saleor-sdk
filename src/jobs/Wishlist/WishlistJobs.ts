@@ -53,6 +53,7 @@ export class WishlistJobs extends JobsHandler<{}> {
 
     if (data)
       this.localStorageHandler.setWishlist({
+        // @ts-ignore
         items: data[0]?.wishlist.items.edges.map(edge => edge.node.product),
       });
 

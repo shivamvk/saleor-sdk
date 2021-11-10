@@ -54,6 +54,24 @@ export enum AddressTypeEnum {
 /**
  * An enumeration.
  */
+export enum AddressTypeType {
+  ADDRESSTYPES_HOME = "ADDRESSTYPES_HOME",
+  ADDRESSTYPES_OTHER = "ADDRESSTYPES_OTHER",
+  ADDRESSTYPES_WORK = "ADDRESSTYPES_WORK",
+}
+
+/**
+ * An enumeration.
+ */
+export enum AddressTypes {
+  HOME = "HOME",
+  OTHER = "OTHER",
+  WORK = "WORK",
+}
+
+/**
+ * An enumeration.
+ */
 export enum CheckoutErrorCode {
   BILLING_ADDRESS_NOT_SET = "BILLING_ADDRESS_NOT_SET",
   CHECKOUT_NOT_FULLY_PAID = "CHECKOUT_NOT_FULLY_PAID",
@@ -87,24 +105,6 @@ export enum CollectionSortField {
   NAME = "NAME",
   PRODUCT_COUNT = "PRODUCT_COUNT",
   PUBLICATION_DATE = "PUBLICATION_DATE",
-}
-
-/**
- * An enumeration.
- */
-export enum AddressTypeType {
-  ADDRESSTYPES_HOME = "ADDRESSTYPES_HOME",
-  ADDRESSTYPES_OTHER = "ADDRESSTYPES_OTHER",
-  ADDRESSTYPES_OFFICE = "ADDRESSTYPES_OFFICE",
-}
-
-/**
- * An enumeration.
- */
-export enum AddressTypes {
-  HOME = "HOME",
-  OTHER = "OTHER",
-  OFFICE = "WORK",
 }
 
 /**
@@ -373,6 +373,14 @@ export enum JobStatusEnum {
   SUCCESS = "SUCCESS",
 }
 
+/**
+ * An enumeration.
+ */
+export enum OTPErrorCodeEnum {
+  INVALID_OTP = "INVALID_OTP",
+  INVALID_PHONE = "INVALID_PHONE",
+}
+
 export enum OrderDirection {
   ASC = "ASC",
   DESC = "DESC",
@@ -387,14 +395,6 @@ export enum OrderStatus {
   FULFILLED = "FULFILLED",
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
   UNFULFILLED = "UNFULFILLED",
-}
-
-/**
- * An enumeration.
- */
-export enum OTPErrorCodeEnum {
-  INVALID_OTP = "INVALID_OTP",
-  INVALID_PHONE = "INVALID_PHONE",
 }
 
 /**
@@ -430,6 +430,7 @@ export enum PaymentErrorCode {
 }
 
 export enum ProductOrderField {
+  COLLECTION = "COLLECTION",
   DATE = "DATE",
   MINIMAL_PRICE = "MINIMAL_PRICE",
   NAME = "NAME",
@@ -523,6 +524,8 @@ export interface ProductFilterInput {
   stocks?: ProductStockFilterInput | null;
   search?: string | null;
   price?: PriceRangeInput | null;
+  discount?: IntRangeInput | null;
+  rating?: IntRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;

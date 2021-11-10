@@ -14,6 +14,7 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
         LocalStorageItems.CHECKOUT
       );
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
@@ -24,6 +25,7 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
         LocalStorageItems.PAYMENT
       );
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
@@ -34,6 +36,7 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
         LocalStorageItems.JOB_QUEUE_CHECKOUT
       );
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
@@ -44,6 +47,7 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
         LocalStorageItems.TOKEN
       );
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
@@ -54,6 +58,7 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
         LocalStorageItems.CSRF_TOKEN
       );
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
@@ -64,6 +69,7 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
         LocalStorageItems.REFRESH_TOKEN
       );
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
@@ -72,6 +78,7 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
     try {
       return await this.saveItem(LocalStorageItems.TOKEN, token);
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
@@ -80,6 +87,7 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
     try {
       return await this.saveItem(LocalStorageItems.CSRF_TOKEN, csrfToken);
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
@@ -88,15 +96,16 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
     try {
       return await this.saveItem(LocalStorageItems.REFRESH_TOKEN, refreshToken);
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
-
 
   async setCheckout(checkout: ICheckoutModel | null): Promise<void> {
     try {
       return await this.saveItem(LocalStorageItems.CHECKOUT, checkout);
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
@@ -105,6 +114,7 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
     try {
       return await this.saveItem(LocalStorageItems.PAYMENT, payment);
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
@@ -113,14 +123,16 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
     try {
       return await this.saveItem(LocalStorageItems.JOB_QUEUE_CHECKOUT, jobs);
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
 
   async setWishlist(wishlist: IWishlistModel | null) {
-    try{
+    try {
       return await this.saveItem(LocalStorageItems.WISHLIST, wishlist);
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }
@@ -129,6 +141,7 @@ export class LocalStorageHandler extends LocalStorageHandlerProxy {
     try {
       return await this.clearStorage();
     } catch (error) {
+      // @ts-ignore
       throw new Error(error.message);
     }
   }

@@ -1,3 +1,4 @@
+import { AddressTypes } from "../../gqlTypes/globalTypes";
 import {
   DataErrorCheckoutTypes,
   FunctionErrorCheckoutTypes,
@@ -18,7 +19,6 @@ import {
   SetBillingAddressWithEmailJobInput,
 } from "./types";
 import { JobsHandler } from "../JobsHandler";
-import { AddressTypes } from "src";
 
 export type PromiseCheckoutJobRunResponse = Promise<
   JobRunResponse<DataErrorCheckoutTypes, FunctionErrorCheckoutTypes>
@@ -87,7 +87,6 @@ class CheckoutJobs extends JobsHandler<{}> {
     return { data };
   };
 
-
   createCheckout = async ({
     email,
     lines,
@@ -149,7 +148,7 @@ class CheckoutJobs extends JobsHandler<{}> {
     }
 
     await this.localStorageHandler.setCheckout({
-      ...(checkout?._W ? checkout?._W : checkout),
+      ...checkout,
       availableShippingMethods: data?.availableShippingMethods,
       billingAsShipping: false,
       email: data?.email,
@@ -182,7 +181,7 @@ class CheckoutJobs extends JobsHandler<{}> {
     }
 
     await this.localStorageHandler.setCheckout({
-      ...(checkout?._W ? checkout?._W : checkout),
+      ...checkout,
       availablePaymentGateways: data?.availablePaymentGateways,
       billingAddress: data?.billingAddress,
       billingAsShipping: !!billingAsShipping,
@@ -232,8 +231,6 @@ class CheckoutJobs extends JobsHandler<{}> {
     checkoutId,
     shippingMethodId,
   }: SetShippingMethodJobInput): PromiseCheckoutJobRunResponse => {
-    const checkout = LocalStorageHandler.getCheckout();
-
     const { data, error } = await this.apolloClientManager.setShippingMethod(
       shippingMethodId,
       checkoutId
@@ -277,7 +274,7 @@ class CheckoutJobs extends JobsHandler<{}> {
     }
 
     await this.localStorageHandler.setCheckout({
-      ...(checkout?._W ? checkout?._W : checkout),
+      ...checkout,
       promoCodeDiscount: data?.promoCodeDiscount,
     });
     return { data };
@@ -304,7 +301,7 @@ class CheckoutJobs extends JobsHandler<{}> {
     }
 
     await this.localStorageHandler.setCheckout({
-      ...(checkout?._W ? checkout?._W : checkout),
+      ...checkout,
       promoCodeDiscount: data?.promoCodeDiscount,
     });
     return { data };

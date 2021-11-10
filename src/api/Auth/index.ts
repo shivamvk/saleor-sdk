@@ -347,15 +347,15 @@ export class AuthAPI extends ErrorListener {
     };
   };
 
-  private autoSignIn = async () => { };
+  private autoSignIn = async () => {};
 
   setUserAvatar = (url: string) => {
     if (this.user) {
       this.user.avatar = {
-        url
+        __typename: "Image",
+        url,
       };
       this.saleorState.loadUser();
     }
-  }
-
+  };
 }

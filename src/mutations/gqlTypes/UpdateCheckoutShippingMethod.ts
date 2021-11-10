@@ -279,6 +279,14 @@ export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_check
   net: UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_checkout_lines_totalPrice_net;
 }
 
+export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_checkout_lines_variant_images {
+  __typename: "ProductImage";
+  /**
+   * The URL of the image.
+   */
+  url: string;
+}
+
 export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_checkout_lines_variant_pricing_priceUndiscounted_gross {
   __typename: "Money";
   /**
@@ -443,6 +451,7 @@ export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_check
    */
   id: string;
   name: string;
+  slug: string;
   /**
    * The main thumbnail for a product.
    */
@@ -470,6 +479,10 @@ export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_check
    * Whether the variant is in stock and visible or not.
    */
   isAvailable: boolean | null;
+  /**
+   * List of images for the product variant.
+   */
+  images: (UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_checkout_lines_variant_images | null)[] | null;
   /**
    * Lists the storefront variant's pricing, the current price and discounts, only meant for displaying.
    */
@@ -563,6 +576,7 @@ export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_check
    * Email of a customer.
    */
   email: string;
+  note: string;
   /**
    * Shipping methods that can be used with this order.
    */
@@ -597,8 +611,7 @@ export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_error
    */
   code: CheckoutErrorCode;
   /**
-   * Name of a field that caused the error. A value of `null` indicates that the
-   * error isn't associated with a particular field.
+   * Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
    */
   field: string | null;
   /**
