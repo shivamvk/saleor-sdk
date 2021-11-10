@@ -31,6 +31,10 @@ export const orderDetailFragment = gql`
     id
     token
     number
+    metadata {
+      key
+      value
+    }
     shippingAddress {
       ...Address
     }
