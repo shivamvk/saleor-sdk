@@ -37,6 +37,14 @@ export const getWishlist = gql`
                   key
                   value
                 }
+                attributes{
+                  attribute{
+                    name
+                  }
+                  values{
+                    name
+                  }
+                }
                 quantityAvailable(countryCode: IN)
                 images {
                   id
