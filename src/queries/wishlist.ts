@@ -37,11 +37,11 @@ export const getWishlist = gql`
                   key
                   value
                 }
-                attributes{
-                  attribute{
+                attributes {
+                  attribute {
                     name
                   }
-                  values{
+                  values {
                     name
                   }
                 }
