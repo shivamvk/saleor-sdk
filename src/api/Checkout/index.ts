@@ -120,10 +120,10 @@ export class SaleorCheckoutAPI extends ErrorListener {
     email: string
   ): CheckoutResponse => {
     const co = this.saleorState.checkout?._W ? this.saleorState.checkout?._W : this.saleorState.checkout;
-    const checkoutId = co.id;
+    const checkoutId = co?.id;
     const alteredLines = co?.lines?.map(item => ({
-      quantity: item!.quantity,
-      variantId: item?.variant!.id,
+      quantity: item?.quantity,
+      variantId: item?.variant?.id,
     }));
     if (alteredLines && checkoutId) {
       const { data, dataError } = await this.jobsManager.run(
@@ -143,31 +143,20 @@ export class SaleorCheckoutAPI extends ErrorListener {
         pending: false,
       };
     }
-    if (alteredLines) {
-      const { data, dataError } = await this.jobsManager.run(
-        "checkout",
-        "createCheckout",
-        {
-          email,
-          lines: alteredLines,
-          selectedShippingAddressId: shippingAddress.id,
-          shippingAddress,
-        }
-      );
+    const { data, dataError } = await this.jobsManager.run(
+      "checkout",
+      "createCheckout",
+      {
+        email,
+        lines: alteredLines,
+        selectedShippingAddressId: shippingAddress.id,
+        shippingAddress,
+      }
+    );
 
-      return {
-        data,
-        dataError,
-        pending: false,
-      };
-    }
     return {
-      functionError: {
-        error: new Error(
-          "You need to add items to cart before setting shipping address."
-        ),
-        type: FunctionErrorCheckoutTypes.ITEMS_NOT_ADDED_TO_CART,
-      },
+      data,
+      dataError,
       pending: false,
     };
   };
