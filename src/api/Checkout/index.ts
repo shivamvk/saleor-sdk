@@ -148,7 +148,7 @@ export class SaleorCheckoutAPI extends ErrorListener {
       "createCheckout",
       {
         email,
-        lines: alteredLines,
+        lines: alteredLines ?? [],
         selectedShippingAddressId: shippingAddress.id,
         shippingAddress,
       }
