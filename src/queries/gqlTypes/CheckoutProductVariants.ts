@@ -135,6 +135,11 @@ export interface CheckoutProductVariants_productVariants_edges_node_attributes {
   values: (CheckoutProductVariants_productVariants_edges_node_attributes_values | null)[];
 }
 
+export interface CheckoutProductVariants_productVariants_edges_node_metadata {
+  key: string;
+  value: string;
+}
+
 export interface CheckoutProductVariants_productVariants_edges_node_product_thumbnail {
   __typename: "Image";
   /**
@@ -207,6 +212,7 @@ export interface CheckoutProductVariants_productVariants_edges_node {
    */
   attributes: CheckoutProductVariants_productVariants_edges_node_attributes[];
   product: CheckoutProductVariants_productVariants_edges_node_product;
+  metadata: CheckoutProductVariants_productVariants_edges_node_metadata[];
 }
 
 export interface CheckoutProductVariants_productVariants_edges {

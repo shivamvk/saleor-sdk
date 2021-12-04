@@ -572,6 +572,7 @@ export class ApolloClientManager {
             pricing: edge.node.pricing,
             product: edge.node.product,
             quantityAvailable: edge.node.quantityAvailable,
+            metadata: edge?.node?.metadata,
             sku: edge.node.sku,
           },
         };
@@ -1197,7 +1198,8 @@ export class ApolloClientManager {
             name: itemVariant?.name,
             pricing: itemVariant?.pricing,
             product: itemVariant?.product,
-            quantityAvailable: itemVariant?.quantityAvailable,
+            quantityAvailable: itemVariant?.quantityAvailable,,
+            metadata: itemVariant?.metadata
             sku: itemVariant?.sku,
             // @ts-ignore
             images: itemVariant?.images
