@@ -405,6 +405,11 @@ export interface Checkout_lines_variant_attributes {
   values: (Checkout_lines_variant_attributes_values | null)[];
 }
 
+export interface Checkout_lines_variant_metadata {
+  key: string;
+  value: string;
+}
+
 export interface Checkout_lines_variant_product_thumbnail {
   __typename: "Image";
   /**
