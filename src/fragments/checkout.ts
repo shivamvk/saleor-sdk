@@ -46,6 +46,10 @@ export const checkoutProductVariantFragment = gql`
     images {
       url
     }
+    metadata {
+      key
+      value
+    }
     pricing {
       onSale
       priceUndiscounted {
