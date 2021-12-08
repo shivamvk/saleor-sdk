@@ -42,6 +42,11 @@ export class CartQueuedJobs extends QueuedJobsHandler<ErrorCartTypes> {
           shippingMethod: data.shippingMethod,
         };
         if(checkout?.lines?.length !== data?.lines?.length){
+          let lc = await LocalStorageHandler.getCheckout();
+          if (lc?.timestamp) {
+            lc = lc?.item;
+          }
+          const ll = data?.lines?.filter(l => lc?.lines?.find(li => li?.variant?.id === l?.variant?.id));
           obj = {
             ...obj,
             lines: data?.lines
