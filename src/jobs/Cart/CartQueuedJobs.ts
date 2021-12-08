@@ -49,7 +49,7 @@ export class CartQueuedJobs extends QueuedJobsHandler<ErrorCartTypes> {
           const ll = data?.lines?.filter(l => lc?.lines?.find(li => li?.variant?.id === l?.variant?.id));
           obj = {
             ...obj,
-            lines: data?.lines
+            lines: ll
           };
         }
         await this.localStorageHandler.setCheckout(obj);
