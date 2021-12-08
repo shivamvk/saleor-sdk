@@ -207,7 +207,7 @@ export class SaleorCartAPI extends ErrorListener {
         },
         timestamp: Date.now(),
       };
-      await AsyncStorage.setItem('data_checkout', JSON.stringify(wrappedItem));
+      await this.localStorageManager.getHandler().setCheckout(wrappedItem?.item);
       if (error) {
         this.localStorageManager.updateItemInCart(variantId, quantity - 1);
         if (this.saleorState.checkout.lines) {
