@@ -96,9 +96,10 @@ export class SaleorCartAPI extends ErrorListener {
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
+        const ll = data?.filter(line => this?.saleorState?.checkout?.lines?.find(l => l?.variant?.id === line?.variant?.id));
         await this.localStorageManager.getHandler().setCheckout({
           ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
-          lines: data,
+          lines: ll,
         });
       }
     }
@@ -128,9 +129,10 @@ export class SaleorCartAPI extends ErrorListener {
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
+        const ll = data?.filter(line => this?.saleorState?.checkout?.lines?.find(l => l?.variant?.id === line?.variant?.id));
         await this.localStorageManager.getHandler().setCheckout({
           ...this.saleorState.checkout,
-          lines: data,
+          lines: ll,
         });
       }
     }
@@ -196,12 +198,13 @@ export class SaleorCartAPI extends ErrorListener {
     }
     if (this.saleorState.checkout?.id) {
       const { data, error } = await this.apolloClientManager.setCartItem(this.saleorState.checkout);
+      const ll = data?.lines?.filter(line => this?.saleorState?.checkout?.lines?.find(l => l?.variant?.id === line?.variant?.id));
       const wrappedItem = {
         item: {
           ...this.saleorState.checkout,
           availablePaymentGateways: data?.availablePaymentGateways,
           availableShippingMethods: data?.availableShippingMethods,
-          lines: data?.lines,
+          lines: ll,
           promoCodeDiscount: data?.promoCodeDiscount,
           shippingMethod: data?.shippingMethod,
         },
