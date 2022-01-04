@@ -1,5 +1,4 @@
 import gql from "graphql-tag";
-
 export const WishlistAddProduct = gql`
   mutation wishlistAddProduct($productId: ID!) {
     WishlistAddProduct: wishlistAddProduct(productId: $productId) {
@@ -15,6 +14,8 @@ export const WishlistAddProduct = gql`
                 product {
                   id
                   name
+                  isPublished
+                  slug
                   isAvailableForPurchase
                   metadata {
                     key
@@ -32,7 +33,14 @@ export const WishlistAddProduct = gql`
                     id
                     sku
                     name
-
+                    attributes {
+                      attribute {
+                        name
+                      }
+                      values {
+                        name
+                      }
+                    }
                     quantityAvailable(countryCode: IN)
                     images {
                       id
@@ -63,7 +71,9 @@ export const WishlistAddProduct = gql`
                       }
                     }
                   }
-
+                  productType{
+                    name
+                  }
                   pricing {
                     priceRangeUndiscounted {
                       start {
@@ -119,7 +129,6 @@ export const WishlistAddProduct = gql`
     }
   }
 `;
-
 export const WishlistRemoveProduct = gql`
   mutation wishlistRemoveProduct($productId: ID!) {
     WishlistRemoveProduct: wishlistRemoveProduct(productId: $productId) {
@@ -135,6 +144,8 @@ export const WishlistRemoveProduct = gql`
                 product {
                   id
                   name
+                  isPublished
+                  slug
                   isAvailableForPurchase
                   metadata {
                     key
@@ -152,7 +163,14 @@ export const WishlistRemoveProduct = gql`
                     id
                     sku
                     name
-
+                    attributes {
+                      attribute {
+                        name
+                      }
+                      values {
+                        name
+                      }
+                    }
                     quantityAvailable(countryCode: IN)
                     images {
                       id
@@ -183,7 +201,9 @@ export const WishlistRemoveProduct = gql`
                       }
                     }
                   }
-
+                  productType{
+                    name
+                  }
                   pricing {
                     priceRangeUndiscounted {
                       start {
