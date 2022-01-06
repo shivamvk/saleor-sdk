@@ -356,6 +356,9 @@ export class AuthAPI extends ErrorListener {
       };
       this.saleorState.loadUser();
     }
-  }
+  };
 
+  refreshUserState = () => {
+    this.saleorState.loadUser();
+  };
 }
