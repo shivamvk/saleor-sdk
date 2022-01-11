@@ -85,24 +85,32 @@ export class SaleorCartAPI extends ErrorListener {
   addItem = async (variantId: string, quantity: number) => {
     // 1. save in local storage
     await this.localStorageManager.addItemToCart(variantId, quantity);
+    console.log("flick debug", this.saleorState.checkout?.lines);
     // 2. save online if possible (if checkout id available)
-    if (this.saleorState.checkout?.lines) {
-      const {
-        data,
-        error,
-      } = await this.apolloClientManager.getRefreshedCheckoutLines(
-        this.saleorState.checkout?.lines
-      );
-      if (error) {
-        this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
-      } else {
-        const ll = data?.filter(line => this?.saleorState?.checkout?.lines?.find(l => l?.variant?.id === line?.variant?.id));
-        await this.localStorageManager.getHandler().setCheckout({
-          ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
-          lines: ll,
-        });
+    // wait for a second before moving ahead to avoid flickeirng
+    setTimeout(() => {
+      completeAddItem();
+    }, 1200);
+    const completeAddItem = async () => {
+      if (this.saleorState.checkout?.lines) {
+        const {
+          data,
+          error,
+        } = await this.apolloClientManager.getRefreshedCheckoutLines(
+          this.saleorState.checkout?.lines
+        );
+        if (error) {
+          this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
+        } else {
+          // const ll = data?.filter(line => this?.saleorState?.checkout?.lines?.find(l => l?.variant?.id === line?.variant?.id));
+          // console.log("flickkk debug", variantId, this.saleorState?.checkout?.lines, ll, data);
+          await this.localStorageManager.getHandler().setCheckout({
+            ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
+            lines: data,
+          });
+        }
       }
-    }
+    };
   };
   setCartItem = async () => {
     if (this.saleorState.checkout?._W?.id || this.saleorState.checkout?.id) {
