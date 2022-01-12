@@ -40,18 +40,19 @@ export class CartQueuedJobs extends QueuedJobsHandler<ErrorCartTypes> {
           availableShippingMethods: data.availableShippingMethods,
           promoCodeDiscount: data.promoCodeDiscount,
           shippingMethod: data.shippingMethod,
+          lines: data.lines
         };
-        if(checkout?.lines?.length !== data?.lines?.length){
-          let lc = await LocalStorageHandler.getCheckout();
-          if (lc?.timestamp) {
-            lc = lc?.item;
-          }
-          const ll = data?.lines?.filter(l => lc?.lines?.find(li => li?.variant?.id === l?.variant?.id));
-          obj = {
-            ...obj,
-            lines: ll
-          };
-        }
+        // if(checkout?.lines?.length !== data?.lines?.length){
+        //   let lc = await LocalStorageHandler.getCheckout();
+        //   if (lc?.timestamp) {
+        //     lc = lc?.item;
+        //   }
+        //   const ll = data?.lines?.filter(l => lc?.lines?.find(li => li?.variant?.id === l?.variant?.id));
+        //   obj = {
+        //     ...obj,
+        //     lines: ll
+        //   };
+        // }
         await this.localStorageHandler.setCheckout(obj);
         return { data };
       }

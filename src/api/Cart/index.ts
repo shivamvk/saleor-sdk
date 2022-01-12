@@ -42,6 +42,7 @@ export class SaleorCartAPI extends ErrorListener {
     this.saleorState.subscribeToChange(
       StateItems.CHECKOUT,
       (checkout: ICheckoutModel) => {
+        console.log("flick stc", checkout?.lines);
         const checkUndefined = (lines: any) => {
           return lines?.find((line: any) => line.id === undefined);
         };
@@ -96,10 +97,20 @@ export class SaleorCartAPI extends ErrorListener {
       if (error) {
         this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
       } else {
-        const ll = data?.filter(line => this?.saleorState?.checkout?.lines?.find(l => l?.variant?.id === line?.variant?.id));
+        const uls = this.saleorState?.checkout?.lines?.map(l => {
+          const fd = data?.find(d => d?.id === l?.id);
+          if(fd){
+            return {
+              ...fd
+            };
+          } else {
+            return l;
+          }
+        });
+        console.log("flick debug", this.saleorState?.checkout?.lines, data, uls);
         await this.localStorageManager.getHandler().setCheckout({
           ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
-          lines: ll,
+          lines: uls,
         });
       }
     }
