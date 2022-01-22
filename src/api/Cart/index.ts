@@ -87,33 +87,33 @@ export class SaleorCartAPI extends ErrorListener {
     // 1. save in local storage
     await this.localStorageManager.addItemToCart(variantId, quantity);
     // 2. save online if possible (if checkout id available)
-    if (this.saleorState.checkout?.lines) {
-      const {
-        data,
-        error,
-      } = await this.apolloClientManager.getRefreshedCheckoutLines(
-        this.saleorState.checkout?.lines
-      );
-      if (error) {
-        this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
-      } else {
-        const uls = this.saleorState?.checkout?.lines?.map(l => {
-          const fd = data?.find(d => d?.id === l?.id);
-          if(fd){
-            return {
-              ...fd
-            };
-          } else {
-            return l;
-          }
-        });
-        console.log("flick debug", this.saleorState?.checkout?.lines, data, uls);
-        await this.localStorageManager.getHandler().setCheckout({
-          ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
-          lines: uls,
-        });
-      }
-    }
+    // if (this.saleorState.checkout?.lines) {
+    //   const {
+    //     data,
+    //     error,
+    //   } = await this.apolloClientManager.getRefreshedCheckoutLines(
+    //     this.saleorState.checkout?.lines
+    //   );
+    //   if (error) {
+    //     this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
+    //   } else {
+    //     const uls = this.saleorState?.checkout?.lines?.map(l => {
+    //       const fd = data?.find(d => d?.id === l?.id);
+    //       if(fd){
+    //         return {
+    //           ...fd
+    //         };
+    //       } else {
+    //         return l;
+    //       }
+    //     });
+    //     console.log("flick debug", this.saleorState?.checkout?.lines, data, uls);
+    //     await this.localStorageManager.getHandler().setCheckout({
+    //       ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
+    //       lines: uls,
+    //     });
+    //   }
+    // }
   };
   setCartItem = async () => {
     if (this.saleorState.checkout?._W?.id || this.saleorState.checkout?.id) {
