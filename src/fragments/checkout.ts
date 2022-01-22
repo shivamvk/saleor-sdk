@@ -44,6 +44,9 @@ export const checkoutProductVariantFragment = gql`
     quantityAvailable
     isAvailable
     images {
+      id
+      sortOrder
+      alt
       url
     }
     metadata {
