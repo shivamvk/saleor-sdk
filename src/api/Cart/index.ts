@@ -130,23 +130,23 @@ export class SaleorCartAPI extends ErrorListener {
     // 1. save in local storage
     this.localStorageManager.removeItemFromCart(variantId);
     // 2. save online if possible (if checkout id available)
-    if (this.saleorState.checkout?.lines) {
-      const {
-        data,
-        error,
-      } = await this.apolloClientManager.getRefreshedCheckoutLines(
-        this.saleorState.checkout?.lines
-      );
-      if (error) {
-        this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
-      } else {
-        const ll = data?.filter(line => this?.saleorState?.checkout?.lines?.find(l => l?.variant?.id === line?.variant?.id));
-        await this.localStorageManager.getHandler().setCheckout({
-          ...this.saleorState.checkout,
-          lines: ll,
-        });
-      }
-    }
+    // if (this.saleorState.checkout?.lines) {
+    //   const {
+    //     data,
+    //     error,
+    //   } = await this.apolloClientManager.getRefreshedCheckoutLines(
+    //     this.saleorState.checkout?.lines
+    //   );
+    //   if (error) {
+    //     this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
+    //   } else {
+    //     const ll = data?.filter(line => this?.saleorState?.checkout?.lines?.find(l => l?.variant?.id === line?.variant?.id));
+    //     await this.localStorageManager.getHandler().setCheckout({
+    //       ...this.saleorState.checkout,
+    //       lines: ll,
+    //     });
+    //   }
+    // }
     if (this.saleorState.checkout?.id) {
       this.jobsManager.addToQueue("cart", "setCartItem");
       return {
@@ -161,22 +161,22 @@ export class SaleorCartAPI extends ErrorListener {
     // 1. save in local storage
     this.localStorageManager.subtractItemFromCart(variantId);
     // 2. save online if possible (if checkout id available)
-    if (this.saleorState.checkout?.lines) {
-      const {
-        data,
-        error,
-      } = await this.apolloClientManager.getRefreshedCheckoutLines(
-        this.saleorState.checkout?.lines
-      );
-      if (error) {
-        this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
-      } else {
-        await this.localStorageManager.getHandler().setCheckout({
-          ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
-          lines: data,
-        });
-      }
-    }
+    // if (this.saleorState.checkout?.lines) {
+    //   const {
+    //     data,
+    //     error,
+    //   } = await this.apolloClientManager.getRefreshedCheckoutLines(
+    //     this.saleorState.checkout?.lines
+    //   );
+    //   if (error) {
+    //     this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
+    //   } else {
+    //     await this.localStorageManager.getHandler().setCheckout({
+    //       ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
+    //       lines: data,
+    //     });
+    //   }
+    // }
     if (this.saleorState.checkout?.id) {
       this.jobsManager.addToQueue("cart", "setCartItem");
       return {
@@ -191,22 +191,22 @@ export class SaleorCartAPI extends ErrorListener {
     // 1. save in local storage
     this.localStorageManager.updateItemInCart(variantId, quantity);
     // 2. save online if possible (if checkout id available)
-    if (this.saleorState.checkout?.lines) {
-      const {
-        data,
-        error,
-      } = await this.apolloClientManager.getRefreshedCheckoutLines(
-        this.saleorState.checkout?.lines
-      );
-      if (error) {
-        this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
-      } else {
-        await this.localStorageManager.getHandler().setCheckout({
-          ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
-          lines: data,
-        });
-      }
-    }
+    // if (this.saleorState.checkout?.lines) {
+    //   const {
+    //     data,
+    //     error,
+    //   } = await this.apolloClientManager.getRefreshedCheckoutLines(
+    //     this.saleorState.checkout?.lines
+    //   );
+    //   if (error) {
+    //     this.fireError(error, ErrorCartTypes.SET_CART_ITEM);
+    //   } else {
+    //     await this.localStorageManager.getHandler().setCheckout({
+    //       ...(this.saleorState.checkout?._W? this.saleorState.checkout?._W: this.saleorState.checkout),
+    //       lines: data,
+    //     });
+    //   }
+    // }
     if (this.saleorState.checkout?.id) {
       const { data, error } = await this.apolloClientManager.setCartItem(this.saleorState.checkout);
       const ll = data?.lines?.filter(line => this?.saleorState?.checkout?.lines?.find(l => l?.variant?.id === line?.variant?.id));
