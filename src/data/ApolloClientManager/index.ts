@@ -439,6 +439,7 @@ export class ApolloClientManager {
   ) => {
     let checkout: Checkout | null;
     try {
+      console.log("in getCheckout") 
       checkout = await new Promise((resolve, reject) => {
         if (isUserSignedIn) {
           const observable = this.client.watchQuery<UserCheckoutDetails, any>({
