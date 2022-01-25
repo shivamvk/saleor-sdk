@@ -114,17 +114,16 @@ export class SaleorCartAPI extends ErrorListener {
     //     });
     //   }
     // }
-  };
-  setCartItem = async () => {
     if (this.saleorState.checkout?._W?.id || this.saleorState.checkout?.id) {
       const { data, error } = await this.jobsManager.addToQueue("cart", "setCartItem");
+      console.log("addItem",data,error)
       if (error) {
-        console.log("in error setCartItem",error)
+        console.log("in error addItem",error)
         return { 
           error,
         };
       }
-      console.log("in data setCartItem",data)
+      console.log("in data addItem",data)
 
       return { 
         data,
@@ -134,6 +133,29 @@ export class SaleorCartAPI extends ErrorListener {
     return {
       pending: false,
     };
+  };
+  setCartItem = async () => {
+    console.log("in empty setCartItem")
+
+    return {}
+    // if (this.saleorState.checkout?._W?.id || this.saleorState.checkout?.id) {
+    //   const { data, error } = await this.jobsManager.addToQueue("cart", "setCartItem");
+    //   if (error) {
+    //     console.log("in error setCartItem",error)
+    //     return { 
+    //       error,
+    //     };
+    //   }
+    //   console.log("in data setCartItem",data)
+
+    //   return { 
+    //     data,
+    //     pending: true,
+    //   };
+    // }
+    // return {
+    //   pending: false,
+    // };
   }
   removeItem = async (variantId: string) => {
     // 1. save in local storage
