@@ -114,7 +114,10 @@ export class SaleorCartAPI extends ErrorListener {
     //     });
     //   }
     // }
+    console.log("in additem")
+
     if (this.saleorState.checkout?._W?.id || this.saleorState.checkout?.id) {
+      console.log("in additem if")
       const { data, error } = await this.jobsManager.addToQueue("cart", "setCartItem");
       console.log("addItem",data,error)
       if (error) {
