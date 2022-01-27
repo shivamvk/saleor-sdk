@@ -181,9 +181,20 @@ export class SaleorCartAPI extends ErrorListener {
     //     });
     //   }
     // }
-    if (this.saleorState.checkout?.id) {
-      this.jobsManager.addToQueue("cart", "setCartItem");
-      return {
+    if (this.saleorState.checkout?._W?.id || this.saleorState.checkout?.id) {
+      console.log("in removeItem if")
+      const { data, error } = await this.jobsManager.run("cart", "setCartItem");
+      console.log("removeItem",data,error)
+      if (error) {
+        console.log("in error removeItem",error)
+        return { 
+          error,
+        };
+      }
+      console.log("in data removeItem",data)
+
+      return { 
+        data,
         pending: true,
       };
     }
